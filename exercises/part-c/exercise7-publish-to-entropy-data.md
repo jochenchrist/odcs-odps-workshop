@@ -5,6 +5,9 @@ YAML files in a git repository work well for a single team — but how do *other
 ## Get Access
 
 1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization — we use `datameshlive2026` as the organization name in the examples below.
+
+   > **No cloud account?** Run the [Entropy Data Community Edition](https://github.com/entropy-data/entropy-data-ce) locally instead: `docker compose -f entropy-data-ce/docker-compose.yaml up -d`, then open [http://localhost:8081](http://localhost:8081) and set `ENTROPY_DATA_HOST=http://localhost:8081` in your `.env`.
+
 2. Go to the organization settings and create an API key (organization write permissions).
 3. Install the Entropy Data CLI:
 
@@ -122,7 +125,7 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
 
     ```
     set -a; source .env; set +a
-    datacontract test sku_sales_per_year.odcs.yaml --publish https://api.entropy-data.com/api/test-results
+    datacontract test sku_sales_per_year.odcs.yaml --publish "$ENTROPY_DATA_HOST/api/test-results"
     ```
 
     Find the test results on the contract page in the UI.
