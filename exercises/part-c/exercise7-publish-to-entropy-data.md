@@ -9,7 +9,7 @@ YAML files in a git repository work well for a single team — but how do *other
    > **No cloud account?** Run the [Entropy Data Community Edition](https://github.com/entropy-data/entropy-data-ce) locally instead: `docker compose -f entropy-data-ce/docker-compose.yaml up -d`, then open [http://localhost:8081](http://localhost:8081) and set `ENTROPY_DATA_HOST=http://localhost:8081` in your `.env`.
 
 2. Go to the organization settings and create an API key (organization write permissions).
-3. Install the Entropy Data CLI:
+3. Install the Entropy Data CLI (already installed if you ran [`scripts/install.sh`](/scripts/install.sh)):
 
    ```
    uv tool install entropy-data

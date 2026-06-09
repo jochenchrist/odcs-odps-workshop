@@ -67,7 +67,7 @@ datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 
 echo "### Exercise 6: consumer-driven contract + input views, rebase the product view"
 datacontract lint solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
-# step 4: the tests fail - the input views do not exist yet
+# step 5: the tests fail - the input views do not exist yet
 expect_fail datacontract test solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
 psql_cmd < solutions/exercise6/sku_sales_input.sql
 datacontract test solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml

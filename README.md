@@ -5,7 +5,7 @@ Hands-on workshop: put a PostgreSQL dataset under contract with [ODCS](https://b
 ## Prerequisites
 
 - [Docker](https://www.docker.com/) (with Docker Compose)
-- [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com), see [`scripts/install.sh`](scripts/)
+- [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/)
 
 ## Getting Started
 
