@@ -53,10 +53,3 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
    ```
    uvx check-jsonschema --schemafile https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-latest.json sku_sales_per_year.odps.yaml
    ```
-
-## Discuss
-
-10. Discuss with your neighbor:
-    - What are the benefits of designing the contract *before* implementing? Who could you show it to, and what feedback could you get?
-    - Which guarantees from the `orders_v2` contract (e.g., `quantity > 0`) does your design implicitly rely on?
-    - In a company with hundreds of data products, would you manage these YAML files by hand? What tooling would you want?
