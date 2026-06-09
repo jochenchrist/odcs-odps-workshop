@@ -24,3 +24,8 @@ printf 'type: hasProperty\nroles:\n- concept: order\n- concept: order_total\n' \
   | entropy-data semantics relationships put main order-has-order-total --file -
 printf 'type: hasProperty\nroles:\n- concept: article\n- concept: sku\n' \
   | entropy-data semantics relationships put main article-has-sku --file -
+
+# link the concepts from the data contract via authoritativeDefinitions (type: semantics)
+# and re-publish it; duplicated text descriptions are removed - the definition lives in the concept
+datacontract lint orders_v2.with-semantics.odcs.yaml
+entropy-data datacontracts put orders_v2 --file orders_v2.with-semantics.odcs.yaml

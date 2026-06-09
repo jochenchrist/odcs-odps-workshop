@@ -187,4 +187,6 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
 
    Do the same for `order_total` (in all contracts that have it) and `sku` (entity `article`).
 
+   > Running the Community Edition locally? The URL host is your local instance then, e.g. `http://localhost:8081/<your-org>/semantics/main/order`.
+
 4. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click.

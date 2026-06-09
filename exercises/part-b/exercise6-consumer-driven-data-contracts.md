@@ -45,4 +45,4 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
    datacontract test sku_sales_per_year.odcs.yaml
    ```
 
-Your data product now touches only the fields in your consumer-driven contract. The producer can see exactly what you depend on — everything else in `orders_v2` may change without breaking you.
+Your data product now touches only the fields in your consumer-driven contract. The producer can see exactly what you depend on — everything else in `orders_v2` may change without breaking you. Best of all: the orders team can run *your* contract (`datacontract test`) in *their* CI pipeline, and catch a change that would break you before it ever ships.
