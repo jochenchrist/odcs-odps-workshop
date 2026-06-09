@@ -26,22 +26,6 @@ SELECT * FROM orders_v2.line_items LIMIT 5;
 
 ## Execute the Migration
 
-You own both versions. Play through the lifecycle by editing the two contract files:
+You own both versions. A full migration goes through this lifecycle: release v2 (`active`), deprecate v1 (`deprecated` plus an `endOfSupport` SLA property with a concrete date), announce the migration in the support channel, and — once nobody queries v1 anymore — retire it (`retired`).
 
-4. Release v2: set its `status` from `draft` to `active`
-5. Deprecate v1:
-   - Set its `status` to `deprecated`
-   - Add an `endOfSupport` SLA property with a concrete date (e.g., six months from today):
-
-     ```yaml
-     slaProperties:
-       - property: endOfSupport
-         value: "2026-12-09"
-         description: v1 is deprecated, migrate to orders_v2
-     ```
-
-6. Notify your consumers: write the actual announcement message you would post in the `#order-data-help` support channel from exercise 1 (2–3 sentences). Make sure it answers: what changes, by when, what do consumers have to do, and where do they get help?
-7. Retire v1: once the `endOfSupport` date has passed and nobody queries v1 anymore, set its `status` to `retired`
-8. Reflect:
-   - How do you *know* nobody queries v1 anymore? What would you need to measure?
-   - When would you actually drop the `orders_v1` schema from the database?
+4. Shortcut for this workshop: set v1 to `retired` and v2 to `active` in your contract files.
