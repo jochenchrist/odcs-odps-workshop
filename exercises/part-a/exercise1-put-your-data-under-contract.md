@@ -153,11 +153,11 @@ Make sure all tests pass before continuing, then:
 
 - Use the **export** command to create an HTML documentation of the data contract:
   ```
-  datacontract export --format html orders_v1.odcs.yaml > orders_v1.odcs.html
+  datacontract export html orders_v1.odcs.yaml --output orders_v1.odcs.html
   ```
 - Export to SQL DDL ([exports](https://cli.datacontract.com/#export)):
   ```
-  datacontract export --format sql orders_v1.odcs.yaml
+  datacontract export sql orders_v1.odcs.yaml
   ```
 - Use the **catalog** command to create a data contract catalog:
   ```
