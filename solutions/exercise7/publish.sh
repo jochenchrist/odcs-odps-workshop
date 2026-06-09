@@ -58,14 +58,13 @@ if ! ./semantics.sh; then
   echo "Semantics not enabled - skipping the semantics bonus"
 fi
 
-# re-run all contract tests and publish the results to the platform
+# re-run all contract tests and publish the results to the configured Entropy Data host
 export DATACONTRACT_POSTGRES_USERNAME=workshop
 export DATACONTRACT_POSTGRES_PASSWORD=workshop
-TEST_RESULTS_URL="${ENTROPY_DATA_HOST:-https://api.entropy-data.com}/api/test-results"
-datacontract test ../exercise1/orders_v1.odcs.yaml --publish "$TEST_RESULTS_URL"
-datacontract test ../exercise2/orders_v2.odcs.yaml --publish "$TEST_RESULTS_URL"
-datacontract test ../exercise4/sku_sales_per_year.odcs.yaml --publish "$TEST_RESULTS_URL"
-datacontract test ../exercise6/orders_v2.consumer_sku_sales.odcs.yaml --publish "$TEST_RESULTS_URL"
+datacontract test ../exercise1/orders_v1.odcs.yaml --publish-test-results
+datacontract test ../exercise2/orders_v2.odcs.yaml --publish-test-results
+datacontract test ../exercise4/sku_sales_per_year.odcs.yaml --publish-test-results
+datacontract test ../exercise6/orders_v2.consumer_sku_sales.odcs.yaml --publish-test-results
 
 entropy-data datacontracts list
 entropy-data dataproducts list

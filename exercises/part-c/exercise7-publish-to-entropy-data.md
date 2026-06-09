@@ -127,8 +127,10 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
 
     ```
     set -a; source .env; set +a
-    datacontract test sku_sales_per_year.odcs.yaml --publish "$ENTROPY_DATA_HOST/api/test-results"
+    datacontract test sku_sales_per_year.odcs.yaml --publish-test-results
     ```
+
+    The results are published to the Entropy Data host configured in `ENTROPY_DATA_HOST`.
 
     Find the test results on the contract page in the UI.
 
