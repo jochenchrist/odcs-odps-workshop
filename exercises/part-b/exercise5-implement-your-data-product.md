@@ -43,13 +43,3 @@ In [Exercise 4](exercise4-design-your-data-product.md) you designed the contract
    ```
 
 5. Your data product is live — set the `status` to `active` in both the contract and the ODPS file!
-
-## Survive a Breaking Change
-
-In exercise 2 you were the producer driving a migration. Now experience the other side: the orders team announces `orders_v3`, which renames `quantity` to `item_count` — a breaking change. The v2 contract gets an `endOfSupport` date six months from now.
-
-6. As the owner of **SKU sales**, plan your migration:
-   - Which of your three artifacts (view, ODCS contract, ODPS file) need to change? Write down the concrete edits — assume `orders_v3` lives in a schema `orders_v3`.
-   - In which order do you apply them, so that your consumers never see a broken or untested view?
-   - Does *your* contract version change? Major, minor, or patch — and why?
-   - How would the orders team have found out that you are affected? Which line in your ODPS file makes your dependency visible?
