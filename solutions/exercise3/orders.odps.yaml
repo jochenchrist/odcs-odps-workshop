@@ -12,12 +12,10 @@ tags: ['orders', 'ecommerce']
 outputPorts:
 - name: orders_v1
   description: Orders and line items tables in PostgreSQL (v1, superseded by v2)
-  type: tables
   version: 1.0.0
   contractId: orders_v1
 - name: orders_v2
   description: Orders and line items tables in PostgreSQL, including quantity (v2)
-  type: tables
   version: 2.0.0
   contractId: orders_v2
 team:

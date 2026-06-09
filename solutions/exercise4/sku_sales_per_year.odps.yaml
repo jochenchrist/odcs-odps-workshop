@@ -15,7 +15,6 @@ inputPorts:
 outputPorts:
 - name: sku_sales_per_year
   description: Aggregated SKU sales per year as a PostgreSQL view
-  type: tables
   version: 1.0.0
   contractId: sku_sales_per_year
 team:

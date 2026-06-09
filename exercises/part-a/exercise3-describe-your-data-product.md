@@ -27,12 +27,10 @@ Note that there is *one* data product — even though it currently offers *two* 
    outputPorts:
      - name: orders_v1
        description: Orders and line items tables in PostgreSQL (v1, superseded by v2)
-       type: tables
        version: 1.0.0
        contractId: orders_v1
      - name: orders_v2
        description: # ...
-       type: tables
        version: 2.0.0
        contractId: orders_v2
    ```

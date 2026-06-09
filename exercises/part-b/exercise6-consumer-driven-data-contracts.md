@@ -6,7 +6,7 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
 
 ## Define What You Need
 
-1. Copy your `orders_v2.odcs.yaml` to `orders_v2.consumer_sku_sales.odcs.yaml` and open it in the [Data Contract Editor](https://editor.datacontract.com). Set the ID to `orders_v2_consumer_sku_sales` and the version to `1.0.0`.
+1. Copy your `orders_v2.odcs.yaml` to `orders_v2.consumer_sku_sales.odcs.yaml` and open it in the [Data Contract Editor](https://editor.datacontract.com). Set the ID to `orders_v2_consumer_sku_sales` and keep the version at `2.0.0` — it is based on the v2 data.
 2. Strip it down to what your view actually uses, and remove everything else (including quality checks on removed fields):
    - `orders`: `order_id`, `order_timestamp`
    - `line_items`: `order_id`, `sku`, `quantity`
