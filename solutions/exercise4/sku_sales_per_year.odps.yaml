@@ -19,7 +19,7 @@ outputPorts:
   version: 1.0.0
   contractId: sku_sales_per_year
 team:
-  name: Purchasing Analytics Team
+  name: purchasing_analytics_team
   members:
   - username: purchasing@example.com
     role: Owner

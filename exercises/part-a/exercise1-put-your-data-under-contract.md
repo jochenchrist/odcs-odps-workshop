@@ -118,7 +118,7 @@ Make sure all tests pass before continuing, then:
 
     ```yaml
     team:
-      name: Order Data Team
+      name: order_data_team
       members:
         - username: owner@example.com
           role: Owner

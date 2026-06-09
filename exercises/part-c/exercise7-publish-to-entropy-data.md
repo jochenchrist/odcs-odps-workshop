@@ -4,8 +4,8 @@ YAML files in a git repository work well for a single team — but how do *other
 
 ## Get Access
 
-1. Log in at [app.entropy-data.com](https://app.entropy-data.com) — your trainers will provide an invitation to the workshop organization.
-2. Create an API key in the organization settings.
+1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization.
+2. Go to the organization settings and create an API key (organization write permissions).
 3. Install the Entropy Data CLI:
 
    ```
@@ -27,18 +27,42 @@ YAML files in a git repository work well for a single team — but how do *other
    entropy-data connection test
    ```
 
+## Create Your Teams
+
+5. Contracts and data products reference a team as their owner — and Entropy Data requires the team to exist before you can publish anything that references it. Create your teams upfront:
+
+   ```
+   cat <<EOF | entropy-data teams put order_data_team --file -
+   id: order_data_team
+   name: Order Data Team
+   type: team
+   description: Owns the orders data
+   EOF
+
+   cat <<EOF | entropy-data teams put purchasing_analytics_team --file -
+   id: purchasing_analytics_team
+   name: Purchasing Analytics Team
+   type: team
+   description: Builds analytical data products for purchasing
+   EOF
+
+   entropy-data teams list
+   ```
+
+   The `team.name` in your ODCS/ODPS files must match the team ID (e.g., `order_data_team`).
+
 ## Publish Your Data Contracts
 
-5. Publish all your data contracts. The ID argument must match the `id` field inside the contract:
+6. Publish all your data contracts. The ID argument must match the `id` field inside the contract:
 
    ```
    entropy-data datacontracts put orders_v1 --file orders_v1.odcs.yaml
    entropy-data datacontracts put orders_v2 --file orders_v2.odcs.yaml
    entropy-data datacontracts put sku_sales_per_year --file sku_sales_per_year.odcs.yaml
-   entropy-data datacontracts put orders_v2_consumer_controlling --file orders_v2.consumer_controlling.odcs.yaml
+   entropy-data datacontracts put orders_v2_consumer_sku_sales --file orders_v2.consumer_sku_sales.odcs.yaml
    ```
 
-6. Check that they are there:
+7. Check that they are there:
 
    ```
    entropy-data datacontracts list
@@ -48,30 +72,53 @@ YAML files in a git repository work well for a single team — but how do *other
 
 Entropy Data natively supports ODPS, so you can publish your data product files as they are.
 
-7. Publish both data products. The ID argument must match the `id` field inside your ODPS file:
+8. Publish both data products. The ID argument must match the `id` field inside your ODPS file:
 
    ```
    entropy-data dataproducts put orders --file orders.odps.yaml
    entropy-data dataproducts put sku_sales --file sku_sales_per_year.odps.yaml
    ```
 
-8. Check that they are there:
+   > **Workaround:** Due to a current bug in Entropy Data, publishing fails if the ODPS file contains `inputPorts`. Remove the `inputPorts` section from `sku_sales_per_year.odps.yaml` right before publishing.
+
+9. Check that they are there:
 
    ```
    entropy-data dataproducts list
    ```
 
+## Connect the Data Products
+
+10. On the platform, the dependency between the two data products is an **access agreement**: the SKU Sales product consumes the `orders_v2` output port of the Orders product. Create it directly in the approved state:
+
+    ```
+    cat <<EOF | entropy-data access put sku_sales_consumes_orders --file -
+    dataUsageAgreementSpecification: 0.0.1
+    id: sku_sales_consumes_orders
+    info:
+      purpose: SKU Sales aggregates orders and line items per SKU and year for the purchasing team
+      status: approved
+      active: true
+    provider:
+      dataProductId: orders
+      outputPortId: orders_v2
+      dataContractId: orders_v2
+    consumer:
+      dataProductId: sku_sales
+    EOF
+    ```
+
 ## Explore the Platform
 
-9. Open [app.entropy-data.com](https://app.entropy-data.com) and explore what the platform made out of your YAML files:
-   - Find your two data products and their output ports
-   - Open the `sku_sales_per_year` contract and compare it with the editor view
-   - Follow the **input port** of the SKU Sales product — the dependency you declared in Exercise 4 is now a navigable link between the two data products
-   - Look at your colleagues' data products: how would you find a data product about SKUs if you didn't know it existed?
+11. Open [app.entropy-data.com](https://app.entropy-data.com) and explore what the platform made out of your YAML files:
+    - Find your two data products and their output ports
+    - Open the `sku_sales_per_year` contract and compare it with the editor view
+    - Follow the access agreement from the SKU Sales product to the Orders product — the dependency you declared in Exercise 4 is now a navigable link in the data product map
+    - Look at your colleagues' data products: how would you find a data product about SKUs if you didn't know it existed?
 
 ## Publish Test Results
 
-10. The platform shows whether a contract is *currently* upheld — if you feed it test results. Run your local tests again and publish the results:
+12. The platform shows whether a contract is *currently* upheld — if you feed it test results. Run your local tests again and publish the results:
 
     ```
     export ENTROPY_DATA_API_KEY=ed_...
@@ -81,12 +128,6 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
     ```
 
     Find the test results on the contract page in the UI.
-
-## Discuss
-
-11. Discuss with your neighbor:
-    - What is the source of truth now — the YAML files in git, or the platform? Which one *should* it be?
-    - In Exercise 5 you played through a breaking change via the support channel. Which parts of that process could the platform automate?
 
 ## Bonus
 

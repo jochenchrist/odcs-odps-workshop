@@ -1,9 +1,9 @@
-version: 2.0.0
+version: 1.0.0
 kind: DataContract
 apiVersion: v3.1.0
-id: orders_v2
+id: orders_v1
 name: Orders
-status: draft
+status: active
 domain: ecommerce
 description:
   purpose: Order data for analytics and reporting
@@ -15,7 +15,7 @@ servers:
   host: localhost
   port: 5433
   database: workshop
-  schema: orders_v2
+  schema: orders_v1
 schema:
 - name: orders
   physicalType: table
@@ -32,7 +32,7 @@ schema:
       description: Must be a valid UUID
     - type: sql
       description: Ensure order_id is unique
-      query: SELECT COUNT(*) FROM (SELECT order_id FROM orders_v2.orders GROUP BY order_id HAVING COUNT(*) > 1) duplicates;
+      query: SELECT COUNT(*) FROM (SELECT order_id FROM orders_v1.orders GROUP BY order_id HAVING COUNT(*) > 1) duplicates;
       mustBe: 0
   - name: order_timestamp
     physicalType: timestamptz
@@ -42,7 +42,7 @@ schema:
       description: Must not be in the future
     - type: sql
       description: Ensure order_timestamp is not in the future
-      query: SELECT COUNT(*) FROM orders_v2.orders WHERE order_timestamp > CURRENT_TIMESTAMP;
+      query: SELECT COUNT(*) FROM orders_v1.orders WHERE order_timestamp > CURRENT_TIMESTAMP;
       mustBe: 0
   - name: order_total
     physicalType: bigint
@@ -52,7 +52,7 @@ schema:
       description: Order total in cents, must be non-negative
     - type: sql
       description: Ensure order_total is non-negative
-      query: SELECT COUNT(*) FROM orders_v2.orders WHERE order_total < 0;
+      query: SELECT COUNT(*) FROM orders_v1.orders WHERE order_total < 0;
       mustBe: 0
   - name: customer_id
     physicalType: text
@@ -62,7 +62,7 @@ schema:
       description: Must be a non-empty alphanumeric identifier
     - type: sql
       description: Ensure customer_id is not empty
-      query: SELECT COUNT(*) FROM orders_v2.orders WHERE customer_id IS NULL OR customer_id = '';
+      query: SELECT COUNT(*) FROM orders_v1.orders WHERE customer_id IS NULL OR customer_id = '';
       mustBe: 0
   - name: customer_email_address
     physicalType: text
@@ -75,18 +75,18 @@ schema:
       description: Must be a valid email address
     - type: sql
       description: Ensure email addresses contain @
-      query: SELECT COUNT(*) FROM orders_v2.orders WHERE customer_email_address NOT LIKE '%@%';
+      query: SELECT COUNT(*) FROM orders_v1.orders WHERE customer_email_address NOT LIKE '%@%';
       mustBe: 0
   quality:
   - type: text
     description: Orders table must not be empty
   - type: sql
     description: Ensure orders table has data
-    query: SELECT COUNT(*) FROM orders_v2.orders;
+    query: SELECT COUNT(*) FROM orders_v1.orders;
     mustBeGreaterThan: 0
   - type: sql
     description: Ensure every order has at least one line item
-    query: SELECT COUNT(*) FROM orders_v2.orders o LEFT JOIN orders_v2.line_items li ON o.order_id = li.order_id WHERE li.order_id IS NULL;
+    query: SELECT COUNT(*) FROM orders_v1.orders o LEFT JOIN orders_v1.line_items li ON o.order_id = li.order_id WHERE li.order_id IS NULL;
     mustBe: 0
 - name: line_items
   physicalType: table
@@ -103,7 +103,7 @@ schema:
       description: Must be a valid UUID
     - type: sql
       description: Ensure lines_item_id is unique
-      query: SELECT COUNT(*) FROM (SELECT lines_item_id FROM orders_v2.line_items GROUP BY lines_item_id HAVING COUNT(*) > 1) duplicates;
+      query: SELECT COUNT(*) FROM (SELECT lines_item_id FROM orders_v1.line_items GROUP BY lines_item_id HAVING COUNT(*) > 1) duplicates;
       mustBe: 0
   - name: order_id
     physicalType: text
@@ -120,31 +120,21 @@ schema:
       description: Must be a non-empty product SKU
     - type: sql
       description: Ensure sku is not empty
-      query: SELECT COUNT(*) FROM orders_v2.line_items WHERE sku IS NULL OR sku = '';
-      mustBe: 0
-  - name: quantity
-    physicalType: bigint
-    logicalType: integer
-    quality:
-    - type: text
-      description: Must be a positive integer, defaults to 1
-    - type: sql
-      description: Ensure quantity is positive
-      query: SELECT COUNT(*) FROM orders_v2.line_items WHERE quantity <= 0;
+      query: SELECT COUNT(*) FROM orders_v1.line_items WHERE sku IS NULL OR sku = '';
       mustBe: 0
   quality:
   - type: text
     description: Line items table must not be empty
   - type: sql
     description: Ensure line_items table has data
-    query: SELECT COUNT(*) FROM orders_v2.line_items;
+    query: SELECT COUNT(*) FROM orders_v1.line_items;
     mustBeGreaterThan: 0
   - type: sql
     description: Ensure every line_items.order_id exists in orders
-    query: SELECT COUNT(*) FROM orders_v2.line_items li LEFT JOIN orders_v2.orders o ON li.order_id = o.order_id WHERE o.order_id IS NULL;
+    query: SELECT COUNT(*) FROM orders_v1.line_items li LEFT JOIN orders_v1.orders o ON li.order_id = o.order_id WHERE o.order_id IS NULL;
     mustBe: 0
 team:
-  name: Order Data Team
+  name: order_data_team
   members:
   - username: owner@example.com
     role: Owner

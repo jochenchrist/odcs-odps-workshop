@@ -2,38 +2,48 @@
 
 A consumer-driven data contract lets the *consumer* define what subset of data they need and what quality they expect. This enables the producer to understand actual usage and avoid breaking real consumers.
 
-**Scenario:** The **controlling team** needs order totals for financial reporting. They don't care about line items or customer emails — they only need `order_id` and `order_total`, and they require every order total to be greater than 0.
+Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the producer's tables directly — it implicitly depends on the whole `orders_v2` contract, even though it only needs five fields. Make that explicit: define a consumer-driven contract for exactly those fields, and create views so you access only what you actually need.
 
-## Create the Consumer Contract
+## Define What You Need
 
-1. Copy your data contract from [Exercise 2](../part-a/exercise2-data-contract-evolution.md) to `orders_v2.consumer_controlling.odcs.yaml` and open it in the [Data Contract Editor](https://editor.datacontract.com) (use the hamburger menu to load files). Set the ID to `orders_v2_consumer_controlling` and the version to `1.0.0`.
-2. The controlling team is only interested in `order_id` and `order_total` from the `orders` object. Remove the `line_items` object entirely and remove all other properties from `orders` except `order_id` and `order_total`.
-3. The consumer requires orders to have an `order_total` greater than 0. Add this as a quality check.
-4. Run the tests and make sure they pass:
+1. Copy your `orders_v2.odcs.yaml` to `orders_v2.consumer_sku_sales.odcs.yaml` and open it in the [Data Contract Editor](https://editor.datacontract.com). Set the ID to `orders_v2_consumer_sku_sales` and the version to `1.0.0`.
+2. Strip it down to what your view actually uses, and remove everything else (including quality checks on removed fields):
+   - `orders`: `order_id`, `order_timestamp`
+   - `line_items`: `order_id`, `sku`, `quantity`
+
+   Keep the `quantity > 0` quality check — your data product relies on it!
+3. Change the server schema to `sku_sales_input` and the `physicalType` of both schema objects to `view` — this is where your access views will live.
+4. Run the tests — they fail, because the views do not exist yet:
 
    ```
    export DATACONTRACT_POSTGRES_USERNAME=workshop
    export DATACONTRACT_POSTGRES_PASSWORD=workshop
-   datacontract test orders_v2.consumer_controlling.odcs.yaml
+   datacontract test orders_v2.consumer_sku_sales.odcs.yaml
    ```
 
-## Create the View
+## Create the Views
 
-So far your consumer contract points directly at the producer's tables. Decouple it: create an internal view that implements exactly the consumer contract — the controlling team's actual queries then work only on their contracted subset.
-
-5. Generate the projection query with the Data Contract CLI:
-
-   ```
-   datacontract export --format sql-query orders_v2.consumer_controlling.odcs.yaml
-   ```
-
-6. Wrap it in a view (connect with `docker compose exec postgres psql -U workshop -d workshop`):
+5. Create views that expose only the contracted fields (connect with `docker compose exec postgres psql -U workshop -d workshop`):
 
    ```sql
-   CREATE SCHEMA IF NOT EXISTS controlling;
+   CREATE SCHEMA IF NOT EXISTS sku_sales_input;
 
-   CREATE OR REPLACE VIEW controlling.orders AS
-   SELECT order_id, order_total FROM orders_v2.orders;
+   CREATE OR REPLACE VIEW sku_sales_input.orders AS
+   SELECT order_id, order_timestamp FROM orders_v2.orders;
+
+   CREATE OR REPLACE VIEW sku_sales_input.line_items AS
+   SELECT order_id, sku, quantity FROM orders_v2.line_items;
    ```
 
-7. Rebase your consumer contract onto the view: change the server schema to `controlling`, set the schema's `physicalType` to `view`, and update the schema name in your quality check query. Run the tests again — they now verify the consumer's view, not the producer's table.
+6. Run the tests again — green.
+
+## Rebase Your Data Product
+
+7. Recreate your `analytics.sku_sales_per_year` view so it selects from `sku_sales_input.orders` and `sku_sales_input.line_items` instead of the `orders_v2` tables.
+8. Verify that your consumers are unaffected:
+
+   ```
+   datacontract test sku_sales_per_year.odcs.yaml
+   ```
+
+Your data product now touches only the fields in your consumer-driven contract. The producer can see exactly what you depend on — everything else in `orders_v2` may change without breaking you.

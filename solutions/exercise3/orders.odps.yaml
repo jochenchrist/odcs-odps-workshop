@@ -21,7 +21,7 @@ outputPorts:
   version: 2.0.0
   contractId: orders_v2
 team:
-  name: Order Data Team
+  name: order_data_team
   members:
   - username: owner@example.com
     role: Owner
