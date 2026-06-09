@@ -4,7 +4,7 @@ YAML files in a git repository work well for a single team — but how do *other
 
 ## Get Access
 
-1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization.
+1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization — we use `datameshlive2026` as the organization name in the examples below.
 2. Go to the organization settings and create an API key (organization write permissions).
 3. Install the Entropy Data CLI:
 
@@ -172,12 +172,12 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
      - name: orders
        authoritativeDefinitions:
          - type: semantics
-           url: https://app.entropy-data.com/<your-org>/semantics/main/order
+           url: https://app.entropy-data.com/datameshlive2026/semantics/main/order
        properties:
          - name: order_id
            authoritativeDefinitions:
              - type: semantics
-               url: https://app.entropy-data.com/<your-org>/semantics/main/order_id
+               url: https://app.entropy-data.com/datameshlive2026/semantics/main/order_id
    ```
 
    Do the same for `order_total` (in all contracts that have it) and `sku` (entity `article`).
