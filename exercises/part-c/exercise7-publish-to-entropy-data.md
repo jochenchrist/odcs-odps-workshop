@@ -101,7 +101,7 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
     info:
       purpose: SKU Sales aggregates orders and line items per SKU and year for the purchasing team
       status: approved
-      active: true
+      startDate: "2026-01-01"
     provider:
       dataProductId: orders
       outputPortId: orders_v2
@@ -110,6 +110,8 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
       dataProductId: sku_sales
     EOF
     ```
+
+    With `status: approved` and a `startDate` in the past, the agreement is active.
 
 ## Explore the Platform
 

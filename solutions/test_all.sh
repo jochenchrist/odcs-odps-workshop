@@ -1,5 +1,6 @@
 #!/bin/bash
-# Rechecks the reference solutions sequentially, exercise by exercise.
+# Rechecks the reference solutions sequentially, exercise by exercise,
+# covering the commands of each exercise (including expected failures and bonus commands).
 set -e
 cd "$(dirname "$0")/.."
 
@@ -21,13 +22,32 @@ check_odps() {
   uvx check-jsonschema --schemafile "$ODPS_SCHEMA" "$1"
 }
 
-psql_file() {
-  docker compose exec -T postgres psql -U workshop -d workshop -v ON_ERROR_STOP=1 < "$1"
+psql_cmd() {
+  docker compose exec -T postgres psql -U workshop -d workshop -v ON_ERROR_STOP=1 "$@"
 }
+
+expect_fail() {
+  if "$@" > /dev/null 2>&1; then
+    echo "ERROR: expected this command to fail, but it succeeded: $*"
+    exit 1
+  fi
+  echo "=== Failed as expected: $* ==="
+}
+
+# start from a clean slate, as participants do
+psql_cmd -c "DROP SCHEMA IF EXISTS analytics CASCADE; DROP SCHEMA IF EXISTS sku_sales_input CASCADE;" > /dev/null
 
 echo "### Exercise 1: contract for orders_v1"
 check_odcs solutions/exercise1/orders_v1.odcs.yaml
 datacontract test solutions/exercise1/orders_v1.odcs.yaml
+# step 9: verify tests can also fail (broken physicalType)
+sed 's/^  - name: customer_email_address$/  - name: customer_email_address_renamed/' \
+  solutions/exercise1/orders_v1.odcs.yaml > /tmp/orders_v1.broken.odcs.yaml
+expect_fail datacontract test /tmp/orders_v1.broken.odcs.yaml
+# bonus: export and catalog
+datacontract export html solutions/exercise1/orders_v1.odcs.yaml --output /tmp/orders_v1.odcs.html
+datacontract export sql solutions/exercise1/orders_v1.odcs.yaml > /dev/null
+datacontract catalog --files 'solutions/exercise*/*.odcs.yaml' --output /tmp/datacontract-catalog > /dev/null
 
 echo "### Exercise 2: contract for orders_v2"
 check_odcs solutions/exercise2/orders_v2.odcs.yaml
@@ -36,26 +56,30 @@ datacontract test solutions/exercise2/orders_v2.odcs.yaml
 echo "### Exercise 3: data product for orders"
 check_odps solutions/exercise3/orders.odps.yaml
 
-echo "### Exercise 4: design contract + data product for sku_sales (contract-first, not implemented yet)"
+echo "### Exercise 4: design contract + data product for sku_sales (contract-first)"
 check_odcs solutions/exercise4/sku_sales_per_year.odcs.yaml
 check_odps solutions/exercise4/sku_sales_per_year.odps.yaml
+# step 4: the tests fail - nothing is implemented yet
+expect_fail datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 
 echo "### Exercise 5: implement the view, tests turn green"
-psql_file solutions/exercise5/sku_sales_per_year.sql
+psql_cmd < solutions/exercise5/sku_sales_per_year.sql
 datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 
 echo "### Exercise 6: consumer-driven contract + input views, rebase the product view"
 check_odcs solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
-psql_file solutions/exercise6/sku_sales_input.sql
-psql_file solutions/exercise6/sku_sales_per_year.sql
+# step 4: the tests fail - the input views do not exist yet
+expect_fail datacontract test solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
+psql_cmd < solutions/exercise6/sku_sales_input.sql
 datacontract test solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
+psql_cmd < solutions/exercise6/sku_sales_per_year.sql
 datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 
 if [ -n "$ENTROPY_DATA_API_KEY" ]; then
   echo "### Exercise 7: publish to Entropy Data"
   ./solutions/exercise7/publish.sh
 else
-  echo "### Exercise 7: skipped (set ENTROPY_DATA_API_KEY and ENTROPY_DATA_HOST to publish)"
+  echo "### Exercise 7: skipped (set ENTROPY_DATA_API_KEY and ENTROPY_DATA_HOST in .env to publish)"
 fi
 
 echo "All checks passed."

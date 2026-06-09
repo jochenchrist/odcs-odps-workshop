@@ -5,6 +5,8 @@ set -e
 cd "$(dirname "$0")"
 if [ -f ../../.env ]; then set -a; . ../../.env; set +a; fi
 
+entropy-data connection test
+
 # teams must exist before contracts/products that reference them as owner
 cat <<EOF | entropy-data teams put order_data_team --file -
 id: order_data_team
@@ -20,6 +22,8 @@ type: team
 description: Builds analytical data products for purchasing
 EOF
 
+entropy-data teams list
+
 entropy-data datacontracts put orders_v1 --file ../exercise1/orders_v1.odcs.yaml
 entropy-data datacontracts put orders_v2 --file ../exercise2/orders_v2.odcs.yaml
 entropy-data datacontracts put sku_sales_per_year --file ../exercise4/sku_sales_per_year.odcs.yaml
@@ -33,13 +37,14 @@ entropy-data dataproducts put orders --file ../exercise3/orders.odps.yaml
 sed '/^inputPorts:/,/^outputPorts:/{/^outputPorts:/!d;}' ../exercise4/sku_sales_per_year.odps.yaml \
   | entropy-data dataproducts put sku_sales --file -
 
+# status approved + a startDate in the past makes the agreement active (the active flag is computed)
 cat <<EOF | entropy-data access put sku_sales_consumes_orders --file -
 dataUsageAgreementSpecification: 0.0.1
 id: sku_sales_consumes_orders
 info:
   purpose: SKU Sales aggregates orders and line items per SKU and year for the purchasing team
   status: approved
-  active: true
+  startDate: "2026-01-01"
 provider:
   dataProductId: orders
   outputPortId: orders_v2
@@ -47,6 +52,11 @@ provider:
 consumer:
   dataProductId: sku_sales
 EOF
+
+# bonus: semantics (requires the Semantics feature to be enabled)
+if ! ./semantics.sh; then
+  echo "Semantics not enabled - skipping the semantics bonus"
+fi
 
 # re-run all contract tests and publish the results to the platform
 export DATACONTRACT_POSTGRES_USERNAME=workshop
