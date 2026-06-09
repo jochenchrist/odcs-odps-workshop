@@ -3,7 +3,7 @@ kind: DataContract
 apiVersion: v3.1.0
 id: sku_sales_per_year
 name: SKU Sales per Year
-status: active
+status: draft
 domain: ecommerce
 description:
   purpose: Shows how often each SKU is bought, grouped by year. Built for the purchasing team to support supplier negotiations.

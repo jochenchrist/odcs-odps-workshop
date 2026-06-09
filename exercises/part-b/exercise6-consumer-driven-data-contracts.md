@@ -12,8 +12,9 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
    - `line_items`: `order_id`, `sku`, `quantity`
 
    Keep the `quantity > 0` quality check — your data product relies on it!
-3. Change the server schema to `sku_sales_input` and the `physicalType` of both schema objects to `view` — this is where your access views will live.
-4. Run the tests — they fail, because the views do not exist yet:
+3. This is *your* contract now, not the orders team's: change the owner. Set `team` and `support` to the purchasing analytics team, and rewrite the `description.purpose` (e.g., "The fields the SKU Sales data product actually needs from orders_v2").
+4. Change the server schema to `sku_sales_input` and the `physicalType` of both schema objects to `view` — this is where your access views will live.
+5. Run the tests — they fail, because the views do not exist yet:
 
    ```
    datacontract test orders_v2.consumer_sku_sales.odcs.yaml
@@ -21,7 +22,7 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
 
 ## Create the Views
 
-5. Create views that expose only the contracted fields (connect with `docker compose exec postgres psql -U workshop -d workshop`):
+6. Create views that expose only the contracted fields (connect with `docker compose exec postgres psql -U workshop -d workshop`):
 
    ```sql
    CREATE SCHEMA IF NOT EXISTS sku_sales_input;
@@ -33,12 +34,12 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
    SELECT order_id, sku, quantity FROM orders_v2.line_items;
    ```
 
-6. Run the tests again — green.
+7. Run the tests again — green.
 
 ## Rebase Your Data Product
 
-7. Recreate your `analytics.sku_sales_per_year` view so it selects from `sku_sales_input.orders` and `sku_sales_input.line_items` instead of the `orders_v2` tables.
-8. Verify that your consumers are unaffected:
+8. Recreate your `analytics.sku_sales_per_year` view so it selects from `sku_sales_input.orders` and `sku_sales_input.line_items` instead of the `orders_v2` tables.
+9. Verify that your consumers are unaffected:
 
    ```
    datacontract test sku_sales_per_year.odcs.yaml

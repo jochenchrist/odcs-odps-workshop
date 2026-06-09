@@ -62,6 +62,8 @@ expect_fail datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 echo "### Exercise 5: implement the view, tests turn green"
 psql_cmd < solutions/exercise5/sku_sales_per_year.sql
 datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
+# exercise 5 ends with setting status to active in the contract and the ODPS file;
+# the exercise4/ solutions keep the draft state from the design phase
 
 echo "### Exercise 6: consumer-driven contract + input views, rebase the product view"
 datacontract lint solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml

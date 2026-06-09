@@ -3,7 +3,7 @@ kind: DataProduct
 id: sku_sales
 name: SKU Sales
 version: 1.0.0
-status: active
+status: draft
 domain: ecommerce
 description:
   purpose: Consumer-aligned data product showing how often each SKU is bought per year, used by the purchasing team for supplier negotiations.
