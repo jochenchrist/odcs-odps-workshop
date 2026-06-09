@@ -47,11 +47,11 @@ YAML files in a git repository work well for a single team — but how do *other
 
 Entropy Data natively supports ODPS, so you can publish your data product files as they are.
 
-7. Publish both data products. The ID argument must match the `id` field inside your ODPS file (the UUID you generated):
+7. Publish both data products. The ID argument must match the `id` field inside your ODPS file:
 
    ```
-   entropy-data dataproducts put <id-of-orders-product> --file orders.odps.yaml
-   entropy-data dataproducts put <id-of-sku-sales-product> --file sku_sales_per_year.odps.yaml
+   entropy-data dataproducts put orders --file orders.odps.yaml
+   entropy-data dataproducts put sku_sales --file sku_sales_per_year.odps.yaml
    ```
 
 8. Check that they are there:

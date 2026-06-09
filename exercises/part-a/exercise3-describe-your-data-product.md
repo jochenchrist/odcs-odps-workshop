@@ -11,7 +11,7 @@ Note that there is *one* data product — even though it currently offers *two* 
    ```yaml
    apiVersion: v1.0.0
    kind: DataProduct
-   id: # generate one with `uuidgen` on the command line
+   id: orders # snake_case of the name
    name: Orders
    version: 2.0.0
    status: active
