@@ -59,10 +59,3 @@ Note that there is *one* data product — even though it currently offers *two* 
    ```
    uvx check-jsonschema --schemafile https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-latest.json orders.odps.yaml
    ```
-
-## Discuss
-
-5. Discuss with your neighbor:
-   - What belongs in the data **contract**, and what belongs in the data **product**? Where would you put `team` and `support` if you had to choose one place?
-   - When v1 is finally retired: what changes in the contract, and what changes in the product?
-   - Who is the audience of the ODPS file — humans, machines, or both?
