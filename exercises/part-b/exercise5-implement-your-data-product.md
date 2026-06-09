@@ -1,40 +1,40 @@
 # Exercise 5: Implement Your Data Product
 
-In [Exercise 4](exercise4-design-your-data-product.md) you designed the contract — now fulfill it. You implement the data product as a plain SQL view on top of the `orders_v2` schema and iterate until the contract tests pass.
+In [Exercise 4](exercise4-design-your-data-product.md) you designed the contract — now fulfill it: a SQL view `analytics.sku_sales_per_year` on top of the `orders_v2` schema that makes your contract tests pass.
 
-## Build the Transformation
+This is the perfect task for an **AI coding agent**: your data contract is machine-readable metadata that specifies exactly what to build, and `datacontract test` gives the agent a feedback loop to verify its work.
 
-1. Connect to the database:
+## Implement with an AI Coding Agent
 
-   ```
-   docker compose exec postgres psql -U workshop -d workshop
-   ```
+1. Start your AI coding agent of choice (Claude Code, Codex, Copilot, ...) in the repository and prompt it, for example:
 
-2. Create the `analytics` schema and the `sku_sales_per_year` view. Join `line_items` with `orders` and aggregate per SKU and year, exactly as your contract specifies:
+   > Implement a PostgreSQL view that fulfills the data contract in `sku_sales_per_year.odcs.yaml`. The source data is described by the contract `orders_v2.odcs.yaml`. Apply it to the database with `docker compose exec postgres psql -U workshop -d workshop`. Then verify with `datacontract test sku_sales_per_year.odcs.yaml` (username and password are `workshop`) and iterate until all tests pass.
 
-   ```sql
-   CREATE SCHEMA IF NOT EXISTS analytics;
+2. Watch what the agent does:
+   - Does it read both contracts — yours for the target, `orders_v2` for the source?
+   - Does it run the tests and react to failures?
+   - The repository tells agents not to peek into `solutions/` — it has to work from the contract, just like a real engineer would.
 
-   CREATE OR REPLACE VIEW analytics.sku_sales_per_year AS
-   SELECT
-       -- your transformation here
-   FROM orders_v2.line_items li
-   JOIN orders_v2.orders o ON li.order_id = o.order_id
-   GROUP BY ...;
-   ```
+## Or Implement Manually
 
-   > **Hint:** `EXTRACT(YEAR FROM order_timestamp)` returns a `numeric` in PostgreSQL — cast it with `::int`. The same goes for `SUM(quantity)`, which returns `numeric` — cast it with `::bigint`. Types matter: they are part of your contract!
+You can also do it yourself:
 
-3. Sanity-check the result:
+```sql
+CREATE SCHEMA IF NOT EXISTS analytics;
 
-   ```sql
-   SELECT * FROM analytics.sku_sales_per_year ORDER BY total_quantity DESC LIMIT 10;
-   SELECT min(year), max(year) FROM analytics.sku_sales_per_year;
-   ```
+CREATE OR REPLACE VIEW analytics.sku_sales_per_year AS
+SELECT
+    -- your transformation here
+FROM orders_v2.line_items li
+JOIN orders_v2.orders o ON li.order_id = o.order_id
+GROUP BY ...;
+```
 
-## Make the Contract Tests Pass
+> **Hint:** `EXTRACT(YEAR FROM order_timestamp)` returns a `numeric` in PostgreSQL — cast it with `::int`. The same goes for `SUM(quantity)`, which returns `numeric` — cast it with `::bigint`. Types matter: they are part of your contract!
 
-4. Run the tests from Exercise 4 again — and iterate on your view until everything is green:
+## Go Live
+
+3. Make sure the tests are green:
 
    ```
    export DATACONTRACT_POSTGRES_USERNAME=workshop
@@ -42,4 +42,4 @@ In [Exercise 4](exercise4-design-your-data-product.md) you designed the contract
    datacontract test sku_sales_per_year.odcs.yaml
    ```
 
-5. Your data product is live — set the `status` to `active` in both the contract and the ODPS file!
+4. Your data product is live — set the `status` to `active` in both the contract and the ODPS file!
