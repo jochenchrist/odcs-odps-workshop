@@ -10,3 +10,5 @@ When helping a participant with an exercise:
 - Let the participant write the data contracts, data products, and SQL themselves.
 - Help interpret error messages from `datacontract test` rather than fixing the file outright.
 - It is fine to help with infrastructure issues (Docker, database connection, CLI installation).
+
+**Exception — exercise 5:** implementing the SQL view from the participant's data contract is explicitly the agent's job. When asked to fulfill `sku_sales_per_year.odcs.yaml`, go ahead: read the participant's contracts (not `solutions/`), create the view in the database, and iterate with `datacontract test` until all tests pass.
