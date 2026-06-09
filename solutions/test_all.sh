@@ -8,13 +8,12 @@ if [ -f .env ]; then set -a; . ./.env; set +a; fi
 export DATACONTRACT_POSTGRES_USERNAME="${DATACONTRACT_POSTGRES_USERNAME:-workshop}"
 export DATACONTRACT_POSTGRES_PASSWORD="${DATACONTRACT_POSTGRES_PASSWORD:-workshop}"
 
-ODCS_SCHEMA=schemas/odcs-json-schema-v3.1.0.json
 ODPS_SCHEMA=schemas/odps-json-schema-v1.0.0.json
 
 check_odcs() {
   echo "=== Checking $1 ==="
+  # lint validates against the ODCS JSON schema internally
   datacontract lint "$1"
-  uvx check-jsonschema --schemafile "$ODCS_SCHEMA" "$1"
 }
 
 check_odps() {
