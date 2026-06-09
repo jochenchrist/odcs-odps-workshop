@@ -38,6 +38,8 @@ expect_fail() {
 psql_cmd -c "DROP SCHEMA IF EXISTS analytics CASCADE; DROP SCHEMA IF EXISTS sku_sales_input CASCADE;" > /dev/null
 
 echo "### Exercise 1: contract for orders_v1"
+# step 2: explore the data
+psql_cmd -c '\dt orders_v1.*' -c 'SELECT * FROM orders_v1.orders LIMIT 5;' -c 'SELECT * FROM orders_v1.line_items LIMIT 5;' > /dev/null
 check_odcs solutions/exercise1/orders_v1.odcs.yaml
 datacontract test solutions/exercise1/orders_v1.odcs.yaml
 # step 9: verify tests can also fail (broken physicalType)
@@ -50,6 +52,8 @@ datacontract export sql solutions/exercise1/orders_v1.odcs.yaml > /dev/null
 datacontract catalog --files 'solutions/exercise*/*.odcs.yaml' --output /tmp/datacontract-catalog > /dev/null
 
 echo "### Exercise 2: contract for orders_v2"
+# explore the new version
+psql_cmd -c '\dt orders_v2.*' -c 'SELECT * FROM orders_v2.orders LIMIT 5;' -c 'SELECT * FROM orders_v2.line_items LIMIT 5;' > /dev/null
 check_odcs solutions/exercise2/orders_v2.odcs.yaml
 datacontract test solutions/exercise2/orders_v2.odcs.yaml
 
