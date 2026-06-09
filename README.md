@@ -56,4 +56,3 @@ No account on [app.entropy-data.com](https://app.entropy-data.com)? Run the [Ent
 ## Trainers
 
 - [Simon Harrer](https://www.linkedin.com/in/simonharrer/)
-- [Arif Wider](https://www.linkedin.com/in/arifwider/)

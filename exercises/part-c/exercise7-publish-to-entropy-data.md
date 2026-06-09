@@ -6,7 +6,7 @@ YAML files in a git repository work well for a single team — but how do *other
 
 1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization — we use `datameshlive2026` as the organization name in the examples below.
 
-   > **No cloud account?** Run the [Entropy Data Community Edition](https://github.com/entropy-data/entropy-data-ce) locally instead: `docker compose -f entropy-data-ce/docker-compose.yaml up -d`, then open [http://localhost:8081](http://localhost:8081) and set `ENTROPY_DATA_HOST=http://localhost:8081` in your `.env`.
+   > **No cloud account?** Run the [Entropy Data Community Edition](https://github.com/entropy-data/entropy-data-ce) locally instead: `docker compose -f entropy-data-ce/docker-compose.yaml up -d`, then `./scripts/setup-entropy-data-ce.sh` — it creates the account, the organization, and the API key, and writes them to your `.env` (steps 1, 2, and 4 done). Log in at [http://localhost:8081](http://localhost:8081) with `workshop@example.com` / `workshop`.
 
 2. Go to the organization settings and create an API key (organization write permissions).
 3. Install the Entropy Data CLI (already installed if you ran [`scripts/install.sh`](/scripts/install.sh)):
