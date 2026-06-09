@@ -39,6 +39,17 @@ properties:
   unique: true
 EOF
 
+cat <<EOF | entropy-data semantics relationships put main order-contains-article --file -
+type: relatedTo
+name: contains
+description: An order contains one or more articles
+roles:
+- concept: order
+- concept: article
+verbalizes:
+- "{Order} contains {Article}"
+EOF
+
 # link the concepts from the data contract via authoritativeDefinitions (type: semantics)
 # and re-publish it; duplicated text descriptions are removed - the definition lives in the concept
 datacontract lint orders_v2.with-semantics.odcs.yaml

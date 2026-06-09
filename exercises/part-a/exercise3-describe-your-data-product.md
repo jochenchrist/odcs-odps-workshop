@@ -21,7 +21,7 @@ Note that there is *one* data product — even though it currently offers *two* 
      limitations: # what should consumers know before using it?
    ```
 
-2. Add an **output port** per data contract. The `contractId` must match the `id` of the respective data contract:
+2. Add an **output port** per data contract. The `contractId` must match the `id` of the respective data contract. Entropy Data reads a display name and the server connection from `customProperties`:
 
    ```yaml
    outputPorts:
@@ -29,10 +29,22 @@ Note that there is *one* data product — even though it currently offers *two* 
        description: Orders and line items tables in PostgreSQL (v1, superseded by v2)
        version: 1.0.0
        contractId: orders_v1
+       customProperties:
+         - property: displayName
+           value: Orders v1
+         - property: server
+           value:
+             type: postgres
+             host: localhost
+             port: 5433
+             database: workshop
+             schema: orders_v1
      - name: orders_v2
        description: # ...
        version: 2.0.0
        contractId: orders_v2
+       customProperties:
+         # ... displayName and server for v2
    ```
 
 3. Add `team` and `support` — you can reuse what you defined in the contracts:

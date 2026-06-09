@@ -182,7 +182,22 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
    EOF
    ```
 
-2. Link the concepts from your data contracts with `authoritativeDefinitions` — and remove the now-duplicated descriptions from the contract fields, the definition lives in one place. An entity's property is addressed as `<entity>.<property>`:
+2. Relate the entities to each other — an order contains articles:
+
+   ```
+   cat <<EOF | entropy-data semantics relationships put main order-contains-article --file -
+   type: relatedTo
+   name: contains
+   description: An order contains one or more articles
+   roles:
+   - concept: order
+   - concept: article
+   verbalizes:
+   - "{Order} contains {Article}"
+   EOF
+   ```
+
+3. Link the concepts from your data contracts with `authoritativeDefinitions` — and remove the now-duplicated descriptions from the contract fields, the definition lives in one place. An entity's property is addressed as `<entity>.<property>`:
 
    ```yaml
    schema:
@@ -201,4 +216,4 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
 
    > The URLs are host-relative on purpose — they resolve on whatever instance the contract lives on, cloud or local Community Edition. Replace `datameshlive2026` with your organization name.
 
-3. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click.
+4. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click. Switch to the **Diagram** view to see the ontology as a graph.

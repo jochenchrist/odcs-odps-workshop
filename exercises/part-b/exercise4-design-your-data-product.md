@@ -35,7 +35,7 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
 ## Describe the Data Product
 
 5. Create `sku_sales_per_year.odps.yaml`, following the same structure as in [Exercise 3](../part-a/exercise3-describe-your-data-product.md) (`id: sku_sales`, name `SKU Sales`, status `draft`, domain `ecommerce`)
-6. Add an **output port** referencing your `sku_sales_per_year` contract
+6. Add an **output port** referencing your `sku_sales_per_year` contract — like in exercise 3, with a `displayName` and the `server` (schema `analytics`) as `customProperties`
 7. Add an **input port** referencing the `orders_v2` contract — this declares which data (and which guarantees!) your product builds on:
 
    ```yaml
