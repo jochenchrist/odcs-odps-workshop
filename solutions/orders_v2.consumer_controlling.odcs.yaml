@@ -14,10 +14,10 @@ servers:
   host: localhost
   port: 5433
   database: workshop
-  schema: orders_v2
+  schema: controlling
 schema:
 - name: orders
-  physicalType: table
+  physicalType: view
   logicalType: object
   physicalName: orders
   properties:
@@ -32,5 +32,5 @@ schema:
     quality:
     - type: sql
       description: Ensure order_total is greater than 0
-      query: SELECT COUNT(*) FROM orders_v2.orders WHERE order_total <= 0;
+      query: SELECT COUNT(*) FROM controlling.orders WHERE order_total <= 0;
       mustBe: 0

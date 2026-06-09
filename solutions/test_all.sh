@@ -3,8 +3,11 @@ set -e
 export DATACONTRACT_POSTGRES_USERNAME=workshop
 export DATACONTRACT_POSTGRES_PASSWORD=workshop
 
-# create the analytics view from exercise 3
+# create the analytics view from exercise 5
 docker compose exec -T postgres psql -U workshop -d workshop -v ON_ERROR_STOP=1 < solutions/sku_sales_per_year.sql
+
+# create the controlling view from exercise 6
+docker compose exec -T postgres psql -U workshop -d workshop -v ON_ERROR_STOP=1 < solutions/controlling.sql
 
 for f in solutions/*.odcs.yaml; do
   echo "=== Linting $f ==="

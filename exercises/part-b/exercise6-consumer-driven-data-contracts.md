@@ -17,12 +17,23 @@ A consumer-driven data contract lets the *consumer* define what subset of data t
    datacontract test orders_v2.consumer_controlling.odcs.yaml
    ```
 
-## Bonus
+## Create the View
 
-- Use the Data Contract CLI to generate an SQL view that does the projection from the provider-driven contract, so the consumer only works on their subset:
+So far your consumer contract points directly at the producer's tables. Decouple it: create an internal view that implements exactly the consumer contract — the controlling team's actual queries then work only on their contracted subset.
 
-  ```
-  datacontract export --format sql-query orders_v2.consumer_controlling.odcs.yaml
-  ```
+5. Generate the projection query with the Data Contract CLI:
 
-  Save the result to `consumer-view.sql`.
+   ```
+   datacontract export --format sql-query orders_v2.consumer_controlling.odcs.yaml
+   ```
+
+6. Wrap it in a view (connect with `docker compose exec postgres psql -U workshop -d workshop`):
+
+   ```sql
+   CREATE SCHEMA IF NOT EXISTS controlling;
+
+   CREATE OR REPLACE VIEW controlling.orders AS
+   SELECT order_id, order_total FROM orders_v2.orders;
+   ```
+
+7. Rebase your consumer contract onto the view: change the server schema to `controlling`, set the schema's `physicalType` to `view`, and update the schema name in your quality check query. Run the tests again — they now verify the consumer's view, not the producer's table.
