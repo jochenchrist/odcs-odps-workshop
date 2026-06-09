@@ -10,12 +10,6 @@ export DATACONTRACT_POSTGRES_PASSWORD="${DATACONTRACT_POSTGRES_PASSWORD:-worksho
 
 ODPS_SCHEMA=schemas/odps-json-schema-v1.0.0.json
 
-check_odcs() {
-  echo "=== Checking $1 ==="
-  # lint validates against the ODCS JSON schema internally
-  datacontract lint "$1"
-}
-
 check_odps() {
   echo "=== Validating $1 ==="
   uvx check-jsonschema --schemafile "$ODPS_SCHEMA" "$1"
@@ -39,7 +33,7 @@ psql_cmd -c "DROP SCHEMA IF EXISTS analytics CASCADE; DROP SCHEMA IF EXISTS sku_
 echo "### Exercise 1: contract for orders_v1"
 # step 2: explore the data
 psql_cmd -c '\dt orders_v1.*' -c 'SELECT * FROM orders_v1.orders LIMIT 5;' -c 'SELECT * FROM orders_v1.line_items LIMIT 5;' > /dev/null
-check_odcs solutions/exercise1/orders_v1.odcs.yaml
+datacontract lint solutions/exercise1/orders_v1.odcs.yaml
 datacontract test solutions/exercise1/orders_v1.odcs.yaml
 # step 9: verify tests can also fail (broken physicalType)
 sed 's/^  - name: customer_email_address$/  - name: customer_email_address_renamed/' \
@@ -53,14 +47,14 @@ datacontract catalog --files 'solutions/exercise*/*.odcs.yaml' --output /tmp/dat
 echo "### Exercise 2: contract for orders_v2"
 # explore the new version
 psql_cmd -c '\dt orders_v2.*' -c 'SELECT * FROM orders_v2.orders LIMIT 5;' -c 'SELECT * FROM orders_v2.line_items LIMIT 5;' > /dev/null
-check_odcs solutions/exercise2/orders_v2.odcs.yaml
+datacontract lint solutions/exercise2/orders_v2.odcs.yaml
 datacontract test solutions/exercise2/orders_v2.odcs.yaml
 
 echo "### Exercise 3: data product for orders"
 check_odps solutions/exercise3/orders.odps.yaml
 
 echo "### Exercise 4: design contract + data product for sku_sales (contract-first)"
-check_odcs solutions/exercise4/sku_sales_per_year.odcs.yaml
+datacontract lint solutions/exercise4/sku_sales_per_year.odcs.yaml
 check_odps solutions/exercise4/sku_sales_per_year.odps.yaml
 # step 4: the tests fail - nothing is implemented yet
 expect_fail datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
@@ -70,7 +64,7 @@ psql_cmd < solutions/exercise5/sku_sales_per_year.sql
 datacontract test solutions/exercise4/sku_sales_per_year.odcs.yaml
 
 echo "### Exercise 6: consumer-driven contract + input views, rebase the product view"
-check_odcs solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
+datacontract lint solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
 # step 4: the tests fail - the input views do not exist yet
 expect_fail datacontract test solutions/exercise6/orders_v2.consumer_sku_sales.odcs.yaml
 psql_cmd < solutions/exercise6/sku_sales_input.sql
