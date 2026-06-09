@@ -37,11 +37,16 @@ Open a SQL prompt with `docker compose exec postgres psql -U workshop -d worksho
 4. [Exercise 4: Design Your Data Product](exercises/part-b/exercise4-design-your-data-product.md) (ODCS + ODPS, contract-first)
 5. [Exercise 5: Implement Your Data Product](exercises/part-b/exercise5-implement-your-data-product.md) (SQL view)
 
+## Part C: Publish to the Data Platform
+
+6. [Exercise 6: Publish to Entropy Data](exercises/part-c/exercise6-publish-to-entropy-data.md) (Entropy Data CLI)
+
 ## Links
 
 - [ODCS Docs](https://bitol-io.github.io/open-data-contract-standard/) · [Source (GitHub)](https://github.com/bitol-io/open-data-contract-standard)
 - [ODPS Docs](https://bitol-io.github.io/open-data-product-standard/) · [Source (GitHub)](https://github.com/bitol-io/open-data-product-standard)
 - [Data Contract CLI (GitHub)](https://github.com/datacontract/datacontract-cli)
+- [Entropy Data Docs](https://docs.entropy-data.com) · [Entropy Data CLI (GitHub)](https://github.com/entropy-data/entropy-data-cli)
 
 ## Trainers
 
