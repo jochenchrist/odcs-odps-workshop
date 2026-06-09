@@ -1,9 +1,11 @@
+# Copy of ../exercise2/orders_v2.odcs.yaml plus semantics links (authoritativeDefinitions)
+# and without the text descriptions that the semantic concepts now carry - keep in sync!
 version: 2.0.0
 kind: DataContract
 apiVersion: v3.1.0
 id: orders_v2
 name: Orders
-status: draft
+status: active
 domain: ecommerce
 description:
   purpose: Order data for analytics and reporting

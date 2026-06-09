@@ -4,7 +4,7 @@ YAML files in a git repository work well for a single team — but how do *other
 
 ## Get Access
 
-1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization — we use `datameshlive2026` as the organization name in the examples below.
+1. Go to [app.entropy-data.com](https://app.entropy-data.com), create an account, and set up your own organization, named `datameshlive2026-<yourfirstname>` (e.g., `datameshlive2026-simon`) — organization names are unique across the platform, so the suffix avoids collisions with your fellow participants. Use lowercase letters, digits, and hyphens only. The examples below use `datameshlive2026`.
 
    > **No cloud account?** Run the [Entropy Data Community Edition](https://github.com/entropy-data/entropy-data-ce) locally instead: `docker compose -f entropy-data-ce/docker-compose.yaml up -d`, then `./scripts/setup-entropy-data-ce.sh` — it creates the account, the organization, and the API key, and writes them to your `.env` (steps 1, 2, and 4 done). Log in at [http://localhost:8081](http://localhost:8081) with `workshop@example.com` / `workshop`.
 
@@ -189,6 +189,6 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
 
    Do the same for `order_total` (in all contracts that have it) and `sku` (entity `article`).
 
-   > The URLs are host-relative on purpose — they resolve on whatever instance the contract lives on, cloud or local Community Edition.
+   > The URLs are host-relative on purpose — they resolve on whatever instance the contract lives on, cloud or local Community Edition. Replace `datameshlive2026` with your organization name.
 
 4. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click.

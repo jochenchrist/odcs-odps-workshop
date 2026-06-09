@@ -3,7 +3,7 @@ kind: DataContract
 apiVersion: v3.1.0
 id: orders_v2
 name: Orders
-status: draft
+status: active
 domain: ecommerce
 description:
   purpose: Order data for analytics and reporting
