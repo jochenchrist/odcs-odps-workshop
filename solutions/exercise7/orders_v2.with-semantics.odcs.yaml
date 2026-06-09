@@ -23,7 +23,7 @@ schema:
   physicalName: orders
   authoritativeDefinitions:
   - type: semantics
-    url: https://app.entropy-data.com/datameshlive2026/semantics/main/order
+    url: /datameshlive2026/semantics/main/order
   properties:
   - name: order_id
     physicalType: text
@@ -32,7 +32,7 @@ schema:
     primaryKey: true
     authoritativeDefinitions:
     - type: semantics
-      url: https://app.entropy-data.com/datameshlive2026/semantics/main/order_id
+      url: /datameshlive2026/semantics/main/order_id
     quality:
     - type: sql
       description: Ensure order_id is unique
@@ -53,7 +53,7 @@ schema:
     logicalType: integer
     authoritativeDefinitions:
     - type: semantics
-      url: https://app.entropy-data.com/datameshlive2026/semantics/main/order_total
+      url: /datameshlive2026/semantics/main/order_total
     quality:
     - type: sql
       description: Ensure order_total is non-negative
@@ -116,7 +116,7 @@ schema:
     required: true
     authoritativeDefinitions:
     - type: semantics
-      url: https://app.entropy-data.com/datameshlive2026/semantics/main/order_id
+      url: /datameshlive2026/semantics/main/order_id
     relationships:
     - type: foreignKey
       to: orders.order_id
@@ -125,7 +125,7 @@ schema:
     logicalType: string
     authoritativeDefinitions:
     - type: semantics
-      url: https://app.entropy-data.com/datameshlive2026/semantics/main/sku
+      url: /datameshlive2026/semantics/main/sku
     quality:
     - type: sql
       description: Ensure sku is not empty

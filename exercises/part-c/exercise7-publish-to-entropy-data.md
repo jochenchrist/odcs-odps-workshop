@@ -177,16 +177,16 @@ Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated acr
      - name: orders
        authoritativeDefinitions:
          - type: semantics
-           url: https://app.entropy-data.com/datameshlive2026/semantics/main/order
+           url: /datameshlive2026/semantics/main/order
        properties:
          - name: order_id
            authoritativeDefinitions:
              - type: semantics
-               url: https://app.entropy-data.com/datameshlive2026/semantics/main/order_id
+               url: /datameshlive2026/semantics/main/order_id
    ```
 
    Do the same for `order_total` (in all contracts that have it) and `sku` (entity `article`).
 
-   > Running the Community Edition locally? The URL host is your local instance then, e.g. `http://localhost:8081/<your-org>/semantics/main/order`.
+   > The URLs are host-relative on purpose — they resolve on whatever instance the contract lives on, cloud or local Community Edition.
 
 4. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click.
