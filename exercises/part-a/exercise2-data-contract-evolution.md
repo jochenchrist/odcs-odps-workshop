@@ -2,9 +2,11 @@
 
 The business wants to track *how many* units of an item are bought per order. The orders team introduces a new column `quantity` in the `line_items` table. It defaults to 1, but it is still a breaking change for data consumers — any downstream pipeline or report that relies on a fixed set of columns will need to be updated. So you release it as a new major version: `orders_v2`.
 
-The database already contains the new version in the schema [`orders_v2`](/data/orders_v2/):
+The database already contains the new version in the schema [`orders_v2`](/data/orders_v2/). It holds both tables — `orders` is unchanged, `line_items` has the new `quantity` column:
 
 ```sql
+\dt orders_v2.*
+SELECT * FROM orders_v2.orders LIMIT 5;
 SELECT * FROM orders_v2.line_items LIMIT 5;
 ```
 
