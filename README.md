@@ -36,10 +36,11 @@ Open a SQL prompt with `docker compose exec postgres psql -U workshop -d worksho
 
 4. [Exercise 4: Design Your Data Product](exercises/part-b/exercise4-design-your-data-product.md) (ODCS + ODPS, contract-first)
 5. [Exercise 5: Implement Your Data Product](exercises/part-b/exercise5-implement-your-data-product.md) (SQL view)
+6. [Exercise 6: Consumer-Driven Data Contracts](exercises/part-b/exercise6-consumer-driven-data-contracts.md) (ODCS)
 
 ## Part C: Publish to the Data Platform
 
-6. [Exercise 6: Publish to Entropy Data](exercises/part-c/exercise6-publish-to-entropy-data.md) (Entropy Data CLI)
+7. [Exercise 7: Publish to Entropy Data](exercises/part-c/exercise7-publish-to-entropy-data.md) (Entropy Data CLI)
 
 ## Links
 

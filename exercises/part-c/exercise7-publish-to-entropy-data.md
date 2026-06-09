@@ -1,4 +1,4 @@
-# Exercise 6: Publish to Entropy Data
+# Exercise 7: Publish to Entropy Data
 
 YAML files in a git repository work well for a single team — but how do *other* teams discover your data products, browse the contracts, and request access? For that you need a data product platform. In this exercise, you publish everything you built in Part A and Part B to [Entropy Data](https://entropy-data.com) using the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli).
 
@@ -29,12 +29,13 @@ YAML files in a git repository work well for a single team — but how do *other
 
 ## Publish Your Data Contracts
 
-5. Publish all three data contracts. The ID argument must match the `id` field inside the contract:
+5. Publish all your data contracts. The ID argument must match the `id` field inside the contract:
 
    ```
    entropy-data datacontracts put orders_v1 --file orders_v1.odcs.yaml
    entropy-data datacontracts put orders_v2 --file orders_v2.odcs.yaml
    entropy-data datacontracts put sku_sales_per_year --file sku_sales_per_year.odcs.yaml
+   entropy-data datacontracts put orders_v2_consumer_controlling --file orders_v2.consumer_controlling.odcs.yaml
    ```
 
 6. Check that they are there:

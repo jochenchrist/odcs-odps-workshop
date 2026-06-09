@@ -1,0 +1,36 @@
+version: 1.0.0
+kind: DataContract
+apiVersion: v3.1.0
+id: orders_v2_consumer_controlling
+name: Orders (Controlling)
+status: active
+domain: ecommerce
+description:
+  purpose: Consumer-driven contract for the controlling team - order totals only
+tags: ['orders', 'controlling']
+servers:
+- server: postgres
+  type: postgres
+  host: localhost
+  port: 5433
+  database: workshop
+  schema: orders_v2
+schema:
+- name: orders
+  physicalType: table
+  logicalType: object
+  physicalName: orders
+  properties:
+  - name: order_id
+    physicalType: text
+    logicalType: string
+    required: true
+    primaryKey: true
+  - name: order_total
+    physicalType: bigint
+    logicalType: integer
+    quality:
+    - type: sql
+      description: Ensure order_total is greater than 0
+      query: SELECT COUNT(*) FROM orders_v2.orders WHERE order_total <= 0;
+      mustBe: 0
