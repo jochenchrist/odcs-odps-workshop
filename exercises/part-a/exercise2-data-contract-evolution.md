@@ -24,12 +24,24 @@ SELECT * FROM orders_v2.line_items LIMIT 5;
    datacontract test orders_v2.odcs.yaml
    ```
 
-## Plan the Migration
+## Execute the Migration
 
-Form teams of two. One person is responsible for v1, the other for v2. Play through the migration process together:
+You own both versions. Play through the lifecycle by editing the two contract files:
 
-4. Think through the lifecycle of v1 and v2:
-   - The v1 owner: set status to `deprecated` and add an `endOfSupport` SLA property with a concrete date
-   - The v2 owner: set status to `active` once consumers have been notified
-   - The v1 owner: eventually set status to `retired`
-   - Who needs to be informed? How would the `support` channels from exercise 1 help here?
+4. Release v2: set its `status` from `draft` to `active`
+5. Deprecate v1:
+   - Set its `status` to `deprecated`
+   - Add an `endOfSupport` SLA property with a concrete date (e.g., six months from today):
+
+     ```yaml
+     slaProperties:
+       - property: endOfSupport
+         value: "2026-12-09"
+         description: v1 is deprecated, migrate to orders_v2
+     ```
+
+6. Notify your consumers: write the actual announcement message you would post in the `#order-data-help` support channel from exercise 1 (2–3 sentences). Make sure it answers: what changes, by when, what do consumers have to do, and where do they get help?
+7. Retire v1: once the `endOfSupport` date has passed and nobody queries v1 anymore, set its `status` to `retired`
+8. Reflect:
+   - How do you *know* nobody queries v1 anymore? What would you need to measure?
+   - When would you actually drop the `orders_v1` schema from the database?
