@@ -7,6 +7,10 @@ export DATACONTRACT_POSTGRES_PASSWORD=workshop
 docker compose exec -T postgres psql -U workshop -d workshop -v ON_ERROR_STOP=1 < solutions/sku_sales_per_year.sql
 
 for f in solutions/*.odcs.yaml; do
+  echo "=== Linting $f ==="
+  datacontract lint "$f"
+  uvx check-jsonschema --schemafile https://raw.githubusercontent.com/bitol-io/open-data-contract-standard/main/schema/odcs-json-schema-v3.1.0.json "$f"
+  echo ""
   echo "=== Testing $f ==="
   datacontract test "$f"
   echo ""
