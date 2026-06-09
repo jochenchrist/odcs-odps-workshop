@@ -57,5 +57,5 @@ Note that there is *one* data product — even though it currently offers *two* 
 4. Validate your data product description against the official JSON schema:
 
    ```
-   uvx check-jsonschema --schemafile https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-latest.json orders.odps.yaml
+   uvx check-jsonschema --schemafile schemas/odps-json-schema-v1.0.0.json orders.odps.yaml
    ```

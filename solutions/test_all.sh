@@ -3,11 +3,12 @@
 set -e
 cd "$(dirname "$0")/.."
 
-export DATACONTRACT_POSTGRES_USERNAME=workshop
-export DATACONTRACT_POSTGRES_PASSWORD=workshop
+if [ -f .env ]; then set -a; . ./.env; set +a; fi
+export DATACONTRACT_POSTGRES_USERNAME="${DATACONTRACT_POSTGRES_USERNAME:-workshop}"
+export DATACONTRACT_POSTGRES_PASSWORD="${DATACONTRACT_POSTGRES_PASSWORD:-workshop}"
 
-ODCS_SCHEMA=https://raw.githubusercontent.com/bitol-io/open-data-contract-standard/main/schema/odcs-json-schema-v3.1.0.json
-ODPS_SCHEMA=https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-latest.json
+ODCS_SCHEMA=schemas/odcs-json-schema-v3.1.0.json
+ODPS_SCHEMA=schemas/odps-json-schema-v1.0.0.json
 
 check_odcs() {
   echo "=== Checking $1 ==="

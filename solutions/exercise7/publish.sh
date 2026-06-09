@@ -1,8 +1,9 @@
 #!/bin/bash
 # Publishes all workshop artifacts to Entropy Data.
-# Requires ENTROPY_DATA_API_KEY and ENTROPY_DATA_HOST (or a .env file / configured connection).
+# Requires ENTROPY_DATA_API_KEY and ENTROPY_DATA_HOST (set via .env in the repository root).
 set -e
 cd "$(dirname "$0")"
+if [ -f ../../.env ]; then set -a; . ../../.env; set +a; fi
 
 # teams must exist before contracts/products that reference them as owner
 cat <<EOF | entropy-data teams put order_data_team --file -
@@ -46,6 +47,15 @@ provider:
 consumer:
   dataProductId: sku_sales
 EOF
+
+# re-run all contract tests and publish the results to the platform
+export DATACONTRACT_POSTGRES_USERNAME=workshop
+export DATACONTRACT_POSTGRES_PASSWORD=workshop
+TEST_RESULTS_URL="${ENTROPY_DATA_HOST:-https://api.entropy-data.com}/api/test-results"
+datacontract test ../exercise1/orders_v1.odcs.yaml --publish "$TEST_RESULTS_URL"
+datacontract test ../exercise2/orders_v2.odcs.yaml --publish "$TEST_RESULTS_URL"
+datacontract test ../exercise4/sku_sales_per_year.odcs.yaml --publish "$TEST_RESULTS_URL"
+datacontract test ../exercise6/orders_v2.consumer_sku_sales.odcs.yaml --publish "$TEST_RESULTS_URL"
 
 entropy-data datacontracts list
 entropy-data dataproducts list

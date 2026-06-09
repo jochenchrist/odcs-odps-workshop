@@ -13,7 +13,7 @@ YAML files in a git repository work well for a single team — but how do *other
    entropy-data --version
    ```
 
-4. Configure the connection. Create a `.env` file in the repository root (it is gitignored, and the CLI picks it up automatically):
+4. Configure the connection: add your API key to the `.env` file in the repository root (created from `.env.example` in exercise 1; it is gitignored, and the Entropy Data CLI picks it up automatically):
 
    ```bash
    # .env
@@ -121,9 +121,7 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
 12. The platform shows whether a contract is *currently* upheld — if you feed it test results. Run your local tests again and publish the results:
 
     ```
-    export ENTROPY_DATA_API_KEY=ed_...
-    export DATACONTRACT_POSTGRES_USERNAME=workshop
-    export DATACONTRACT_POSTGRES_PASSWORD=workshop
+    set -a; source .env; set +a
     datacontract test sku_sales_per_year.odcs.yaml --publish https://api.entropy-data.com/api/test-results
     ```
 
@@ -133,3 +131,55 @@ Entropy Data natively supports ODPS, so you can publish your data product files 
 
 - Keep git as the source of truth: explore `entropy-data datacontracts import-from-git --help` and think about how you would wire this up in a CI/CD pipeline
 - Publish test results automatically on every push: have a look at `datacontract ci --help`
+
+### Bonus: Semantics
+
+Right now, the meaning of `order_id`, `order_total`, and `sku` is duplicated across your contracts — every contract carries its own copy of the descriptions. Define each concept *once* in **Semantics**, and link to it from the contracts.
+
+1. Create the business entities and their properties:
+
+   ```
+   printf 'name: Main\n' | entropy-data semantics namespaces put main --file -
+
+   printf 'name: Order\nkind: entity\ndescription: A customer order in the e-commerce platform\n' \
+     | entropy-data semantics concepts put main order --file -
+   printf 'name: Order ID\nkind: shared_property\ndescription: Unique identifier of an order (UUID)\ndata_type: string\n' \
+     | entropy-data semantics concepts put main order_id --file -
+   printf 'name: Order Total\nkind: shared_property\ndescription: Total amount of an order in cents, never negative\ndata_type: integer\n' \
+     | entropy-data semantics concepts put main order_total --file -
+
+   printf 'name: Article\nkind: entity\ndescription: A product that can be bought in the e-commerce platform\n' \
+     | entropy-data semantics concepts put main article --file -
+   printf 'name: SKU\nkind: shared_property\ndescription: Stock keeping unit, the unique identifier of an article\ndata_type: string\n' \
+     | entropy-data semantics concepts put main sku --file -
+   ```
+
+2. Connect the entities to their properties:
+
+   ```
+   printf 'type: hasProperty\nroles:\n- concept: order\n- concept: order_id\n' \
+     | entropy-data semantics relationships put main order-has-order-id --file -
+   printf 'type: hasProperty\nroles:\n- concept: order\n- concept: order_total\n' \
+     | entropy-data semantics relationships put main order-has-order-total --file -
+   printf 'type: hasProperty\nroles:\n- concept: article\n- concept: sku\n' \
+     | entropy-data semantics relationships put main article-has-sku --file -
+   ```
+
+3. Link the concepts from your data contracts with `authoritativeDefinitions` — and remove the now-duplicated descriptions from the contract fields, the definition lives in one place:
+
+   ```yaml
+   schema:
+     - name: orders
+       authoritativeDefinitions:
+         - type: semantics
+           url: https://app.entropy-data.com/<your-org>/semantics/main/order
+       properties:
+         - name: order_id
+           authoritativeDefinitions:
+             - type: semantics
+               url: https://app.entropy-data.com/<your-org>/semantics/main/order_id
+   ```
+
+   Do the same for `order_total` (in all contracts that have it) and `sku` (entity `article`).
+
+4. Re-publish the contracts and open a concept's page in **Studio > Semantics**: the reverse lookup shows every data contract that links to it — "which datasets contain order totals?" is now one click.

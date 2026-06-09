@@ -47,11 +47,11 @@ You are the owner of the **orders** data in your company's e-commerce platform. 
 ## Test the Contract
 
 6. Save the contract locally as `orders_v1.odcs.yaml` (use the save button on the top right)
-7. Run the tests with the Data Contract CLI (see [`scripts/install.sh`](/scripts/install.sh) for installation):
+7. Run the tests with the Data Contract CLI (see [`scripts/install.sh`](/scripts/install.sh) for installation). The database credentials come from the `.env` file:
 
    ```
-   export DATACONTRACT_POSTGRES_USERNAME=workshop
-   export DATACONTRACT_POSTGRES_PASSWORD=workshop
+   cp .env.example .env
+   set -a; source .env; set +a
    datacontract test orders_v1.odcs.yaml
    ```
 

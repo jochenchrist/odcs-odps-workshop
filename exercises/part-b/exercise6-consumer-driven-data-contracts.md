@@ -16,8 +16,6 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
 4. Run the tests — they fail, because the views do not exist yet:
 
    ```
-   export DATACONTRACT_POSTGRES_USERNAME=workshop
-   export DATACONTRACT_POSTGRES_PASSWORD=workshop
    datacontract test orders_v2.consumer_sku_sales.odcs.yaml
    ```
 

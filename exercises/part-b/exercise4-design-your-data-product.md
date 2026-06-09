@@ -27,8 +27,6 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
 4. Save it locally as `sku_sales_per_year.odcs.yaml` and run the tests:
 
    ```
-   export DATACONTRACT_POSTGRES_USERNAME=workshop
-   export DATACONTRACT_POSTGRES_PASSWORD=workshop
    datacontract test sku_sales_per_year.odcs.yaml
    ```
 
@@ -51,5 +49,5 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
 9. Validate:
 
    ```
-   uvx check-jsonschema --schemafile https://raw.githubusercontent.com/bitol-io/open-data-product-standard/main/schema/odps-json-schema-latest.json sku_sales_per_year.odps.yaml
+   uvx check-jsonschema --schemafile schemas/odps-json-schema-v1.0.0.json sku_sales_per_year.odps.yaml
    ```

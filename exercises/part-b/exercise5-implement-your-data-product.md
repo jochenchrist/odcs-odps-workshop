@@ -37,8 +37,6 @@ GROUP BY ...;
 3. Make sure the tests are green:
 
    ```
-   export DATACONTRACT_POSTGRES_USERNAME=workshop
-   export DATACONTRACT_POSTGRES_PASSWORD=workshop
    datacontract test sku_sales_per_year.odcs.yaml
    ```
 
