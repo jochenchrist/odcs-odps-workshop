@@ -22,32 +22,42 @@ You are the owner of the **orders** data in your company's e-commerce platform. 
    SELECT * FROM orders_v1.line_items LIMIT 5;
    ```
 
+   You should see the two tables `orders` and `line_items`, and 5 rows of example data from each `SELECT`. If you get no output at all, check for typos — `psql` returns nothing for a misspelled schema or table name.
+
    The raw data is also available as JSON files in [`data/orders_v1/`](/data/orders_v1/).
 
 ## Create the Contract
 
 3. Go to [editor.datacontract.com](https://editor.datacontract.com) and create a new data contract. Use the **Form** editor to get started.
    - Set the contract name to `Orders`, ID to `orders_v1`, version to `1.0.0`, and status to `draft`
-4. Set up the server connection: type `postgres`, host `localhost`, port `5433`, database `workshop`, schema `orders_v1`
-5. Add the two schemas `orders` and `line_items` with all their properties and logical types.
+4. Save the contract locally as `orders_v1.odcs.yaml` (use the save button on the top right) — this is the file you will keep updating and testing throughout the exercise
+5. Set up the server connection: open **Servers** in the left navigation (or use the direct link [editor.datacontract.com/#/servers](https://editor.datacontract.com/#/servers)) and add a server with type `postgres`, host `localhost`, port `5433`, database `workshop`, schema `orders_v1`
+6. Add the two schemas `orders` and `line_items` with all their properties and logical types.
 
    > **Hint:** Each property needs a `logicalType` (the abstract type like `string`, `integer`, `date`) and a `physicalType` (the actual database type like `text`, `bigint`, `timestamptz`). Here are the columns you should find:
    >
-   > | Schema | Property | physicalType |
-   > |--------|----------|--------------|
-   > | `orders` | `order_id` | `text` |
-   > | `orders` | `order_timestamp` | `timestamptz` |
-   > | `orders` | `order_total` | `bigint` |
-   > | `orders` | `customer_id` | `text` |
-   > | `orders` | `customer_email_address` | `text` |
-   > | `line_items` | `lines_item_id` | `text` |
-   > | `line_items` | `order_id` | `text` |
-   > | `line_items` | `sku` | `text` |
+   > Schema `orders`:
+   >
+   > | Property | logicalType | physicalType |
+   > |----------|-------------|--------------|
+   > | `order_id` | `string` | `text` |
+   > | `order_timestamp` | `date` | `timestamptz` |
+   > | `order_total` | `integer` | `bigint` |
+   > | `customer_id` | `string` | `text` |
+   > | `customer_email_address` | `string` | `text` |
+   >
+   > Schema `line_items`:
+   >
+   > | Property | logicalType | physicalType |
+   > |----------|-------------|--------------|
+   > | `lines_item_id` | `string` | `text` |
+   > | `order_id` | `string` | `text` |
+   > | `sku` | `string` | `text` |
 
 ## Test the Contract
 
-6. Save the contract locally as `orders_v1.odcs.yaml` (use the save button on the top right)
-7. Run the tests with the Data Contract CLI (see [`scripts/install.sh`](/scripts/install.sh) for installation). The database credentials come from the `.env` file:
+7. Save the contract again so `orders_v1.odcs.yaml` contains the server and schema changes
+8. Run the tests with the Data Contract CLI (see [`scripts/install.sh`](/scripts/install.sh) for installation). The database credentials come from the `.env` file:
 
    ```
    cp .env.example .env
@@ -55,22 +65,22 @@ You are the owner of the **orders** data in your company's e-commerce platform. 
    datacontract test orders_v1.odcs.yaml
    ```
 
-8. Fix any wrong types and run the tests again
-9. Verify tests can also fail: change `physicalType` of `customer_email_address` to `integer` (or remove a column), then run the tests again. Revert afterwards.
+9. Fix any wrong types and run the tests again
+10. Verify tests can also fail: change `physicalType` of `customer_email_address` to `integer` (or remove a column), then run the tests again. Revert afterwards.
 
 ## Enrich the Contract
 
 Make sure all tests pass before continuing, then:
 
-10. Add a `description` with `purpose` (e.g., "Order data for analytics and reporting") and `limitations`
-11. Add `tags`, e.g., `['orders', 'ecommerce']`
-12. Mark `customer_email_address` with `classification: confidential` (it's PII)
-13. Add `examples` for `customer_email_address` based on the data, e.g., `examples: ['test394@example.org']`
-14. Make `customer_email_address` a required field: `required: true` — run the tests again
+11. Add a `description` with `purpose` (e.g., "Order data for analytics and reporting") and `limitations`
+12. Add `tags`, e.g., `['orders', 'ecommerce']`
+13. Mark `customer_email_address` with `classification: confidential` (it's PII)
+14. Add `examples` for `customer_email_address` based on the data, e.g., `examples: ['test394@example.org']`
+15. Make `customer_email_address` a required field: `required: true` — run the tests again
 
 ## Define Relationships
 
-15. Add a `relationship` from `line_items.order_id` to `orders.order_id` to express the foreign key
+16. Add a `relationship` from `line_items.order_id` to `orders.order_id` to express the foreign key
 
     ```yaml
     relationships:
@@ -80,7 +90,7 @@ Make sure all tests pass before continuing, then:
 
 ## Add Quality Checks
 
-16. Add a SQL quality check to ensure that `customer_email_address` contains an `@` sign (find invalid rows):
+17. Add a SQL quality check to ensure that `customer_email_address` contains an `@` sign (find invalid rows):
 
     ```yaml
     quality:
@@ -90,7 +100,7 @@ Make sure all tests pass before continuing, then:
         mustBe: 0
     ```
 
-17. Add more constraints (if time allows):
+18. Add more constraints (if time allows):
     - Every `order_id` in `line_items` must exist in `orders`
     - `order_total` must be greater than or equal to 0
     - Think of your own additional constraints
@@ -114,7 +124,7 @@ Make sure all tests pass before continuing, then:
 
 ## Add Ownership
 
-18. Add a `team` and `support` channel:
+19. Add a `team` and `support` channel:
 
     ```yaml
     team:
@@ -131,7 +141,7 @@ Make sure all tests pass before continuing, then:
 
 ## Add SLA Properties
 
-19. Define service-level expectations:
+20. Define service-level expectations:
 
     ```yaml
     slaProperties:
@@ -147,7 +157,7 @@ Make sure all tests pass before continuing, then:
 
 ## Publish
 
-20. Your contract is complete — set `status` to `active` to publish it!
+21. Your contract is complete — set `status` to `active` to publish it!
 
 ## Bonus
 

@@ -9,6 +9,8 @@ Hands-on: put a PostgreSQL dataset under contract with [ODCS](https://bitol-io.g
 - [Docker](https://www.docker.com/) (with Docker Compose)
 - [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/)
 
+> **Tip:** Conference and hotel WiFi can be painfully slow. Pull the Docker images in advance while you still have a good connection: `docker compose pull`
+
 ## Getting Started
 
 Start the database (PostgreSQL on `localhost:5433`, preloaded with e-commerce data):
