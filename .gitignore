@@ -4,5 +4,4 @@ catalog
 .idea
 .claude
 
-orders_v1.odcs.yaml
-orders_v1.odcs.html
+orders_v?.odcs.*
