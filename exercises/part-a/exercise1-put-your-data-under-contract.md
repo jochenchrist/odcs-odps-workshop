@@ -155,6 +155,15 @@ Make sure all tests pass before continuing. From here you can enrich the contrac
 > [!NOTE]
 > The editor and the file on disk don't sync automatically. If you switch sides, re-import the file into the editor (or re-download from it) first — otherwise you'll overwrite your changes.
 
+> [!TIP]
+> You can get the best of both worlds with the **edit** command:
+>
+> ```bash
+> datacontract edit orders_v1.odcs.yaml
+> ```
+>
+> It starts the Data Contract Editor locally for that file — saving in the editor writes directly back to the file on disk, so there's nothing to re-import or re-download.
+
 The steps below name the editor's form fields, but each one is just a key in the YAML, so do whichever is faster for you.
 
 Let's add some more detail to the contract...
