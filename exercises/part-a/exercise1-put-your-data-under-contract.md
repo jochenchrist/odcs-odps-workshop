@@ -57,6 +57,8 @@ Your goal is to define a data contract so that consumers of your data know exact
    (5 rows)
    ```
 
+   If you get no output at all, check for typos — `psql` returns nothing for a misspelled schema or table name.
+
    The raw data is also available as JSON files in [`data/orders_v1/`](/data/orders_v1/).
 
 
@@ -70,7 +72,7 @@ Your goal is to define a data contract so that consumers of your data know exact
    - **Version**: `1.0.0`
    - **Status**: `draft` (leave as is)
    
-5. Go to **Servers** and add a new server:
+5. Go to **Servers** in the left navigation (or use the direct link [editor.datacontract.com/#/servers](https://editor.datacontract.com/#/servers)) and add a new server:
    
    - **Server**: `Orders`
    - **Type**: `postgres`
