@@ -5,3 +5,4 @@ catalog
 .claude
 
 orders_v?.odcs.*
+orders.odps.*
