@@ -1,8 +1,13 @@
 # Exercise 3: Describe Your Data Product
 
-The data contracts from [Exercise 1](exercise1-put-your-data-under-contract.md) and [Exercise 2](exercise2-data-contract-evolution.md) describe the *interface* of your data. But consumers also want to know about the **data product** behind it: who owns it, what it is for, and which contracts it offers. That is what the [Open Data Product Standard (ODPS)](https://bitol-io.github.io/open-data-product-standard/latest/) is for.
+The data contracts from [Exercise 1](exercise1-put-your-data-under-contract.md) and [Exercise 2](exercise2-data-contract-evolution.md) describe the *interface* of your data.
+But consumers also want to know about the **data product** behind it:
+who owns it, what it is for, and which contracts it offers.
+That is what the [Open Data Product Standard] (ODPS) is for.
 
-Note that there is *one* data product — even though it currently offers *two* contract versions. The product is the stable unit of ownership; its ports evolve.
+Note that there is *one* data product — even though it currently offers *two* contract versions.
+The product is the stable unit of ownership; its ports evolve.
+
 
 ## Create the Data Product
 
@@ -21,7 +26,11 @@ Note that there is *one* data product — even though it currently offers *two* 
      limitations: # what should consumers know before using it?
    ```
 
-2. Add an **output port** per data contract. The `contractId` must match the `id` of the respective data contract. Entropy Data reads a display name and the server connection from `customProperties`:
+   Replace the `purpose` and `limitations` comments with real text.
+
+2. Add an **output port** per data contract.
+   The `contractId` must match the `id` of the respective data contract.
+   Entropy Data reads a display name and the server connection from `customProperties`:
 
    ```yaml
    outputPorts:
@@ -66,6 +75,8 @@ Note that there is *one* data product — even though it currently offers *two* 
 
 4. Validate your data product description against the official JSON schema:
 
-   ```
+   ```bash
    uvx check-jsonschema --schemafile schemas/odps-json-schema-v1.0.0.json orders.odps.yaml
    ```
+
+[Open Data Product Standard]: <https://bitol-io.github.io/open-data-product-standard/latest/>

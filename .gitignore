@@ -3,3 +3,6 @@ catalog
 
 .idea
 .claude
+
+orders_v?.odcs.*
+orders.odps.*
