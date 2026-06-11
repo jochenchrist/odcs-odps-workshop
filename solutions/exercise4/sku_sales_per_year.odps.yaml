@@ -17,16 +17,6 @@ outputPorts:
   description: Aggregated SKU sales per year as a PostgreSQL view
   version: 1.0.0
   contractId: sku_sales_per_year
-  customProperties:
-  - property: displayName
-    value: SKU Sales per Year
-  - property: server
-    value:
-      type: postgres
-      host: localhost
-      port: 5433
-      database: workshop
-      schema: analytics
 team:
   name: purchasing_analytics_team
   members:

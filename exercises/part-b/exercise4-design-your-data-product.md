@@ -68,16 +68,6 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
      - name: sku_sales_per_year
        version: 1.0.0
        contractId: sku_sales_per_year
-       customProperties:
-         - property: displayName
-           value: SKU Sales per Year
-         - property: server
-           value:
-           type: postgres
-           host: localhost
-           port: 5433
-           database: workshop
-           schema: analytics
       ```
  
 7. Add an **input port** referencing the `orders_v2` contract — this declares which data (and which guarantees!) your product builds on:
