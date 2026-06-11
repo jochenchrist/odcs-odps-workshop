@@ -8,10 +8,10 @@ Hands-on: put a PostgreSQL dataset under contract with [ODCS](https://bitol-io.g
 ## Prerequisites
 
 - [Docker](https://www.docker.com/) (with Docker Compose)
-- [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/)
+- [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/install.sh)
 
 > [!TIP]
-> Conference and hotel WiFi can be painfully slow. Pull the Docker images in advance while you still have a good connection: `docker compose pull`
+> Conference and hotel Wi-Fi can be painfully slow. Pull the Docker images in advance while you still have a good connection: `docker compose pull`
 
 
 ## Getting Started

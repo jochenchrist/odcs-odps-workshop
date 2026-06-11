@@ -4,6 +4,8 @@ catalog
 .idea
 .claude
 
-orders_v?.odcs.*
+orders_v1.odcs.*
+orders_v2.odcs.*
 orders.odps.*
 sku_sales_per_year.*
+orders_v2.consumer_sku_sales.odcs.*

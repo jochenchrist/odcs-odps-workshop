@@ -20,6 +20,7 @@ Your view from [Exercise 5](exercise5-implement-your-data-product.md) reads the 
 3. This is *your* contract now, not the orders team's: change the owner. Set `team` and `support` to the purchasing analytics team, and rewrite the `description.purpose` (e.g., "The fields the SKU Sales data product actually needs from orders_v2").
 
 4. Change the server schema to `sku_sales_input` and the `physicalType` of both schema objects to `VIEW` — this is where your access views will live.
+   
    If the kept `quantity > 0` check is a SQL query, update its schema reference from `orders_v2.` to `sku_sales_input.`, otherwise it would still test the old tables.
 
 5. Run the tests — they fail, because the views do not exist yet:
