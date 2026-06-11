@@ -53,11 +53,6 @@ consumer:
   dataProductId: sku_sales
 EOF
 
-# bonus: semantics (requires the Semantics feature to be enabled)
-if ! ./semantics.sh; then
-  echo "Semantics not enabled - skipping the semantics bonus"
-fi
-
 # re-run all contract tests and publish the results to the configured Entropy Data host
 export DATACONTRACT_POSTGRES_USERNAME=workshop
 export DATACONTRACT_POSTGRES_PASSWORD=workshop

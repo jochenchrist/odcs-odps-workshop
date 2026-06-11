@@ -1,5 +1,6 @@
 #!/bin/bash
-# Bonus: create the semantic entities with their properties (requires the Semantics feature).
+# Creates the semantic entities with their properties and links the contracts to them
+# (requires the Semantics feature to be enabled).
 set -e
 cd "$(dirname "$0")"
 if [ -f ../../.env ]; then set -a; . ../../.env; set +a; fi

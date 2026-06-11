@@ -1,6 +1,6 @@
 # Entropy Data (Community Edition) - run the data platform for Part C locally.
 # Copy of https://github.com/entropy-data/entropy-data-ce/blob/main/docker-compose.yaml
-# (plus APPLICATION_SEMANTICS_ENABLED for the semantics bonus in exercise 7)
+# (plus APPLICATION_SEMANTICS_ENABLED for the semantics in exercise 8)
 #
 #   docker compose -f entropy-data-ce/docker-compose.yaml up -d
 #
