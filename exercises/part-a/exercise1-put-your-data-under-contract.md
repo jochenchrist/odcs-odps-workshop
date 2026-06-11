@@ -64,15 +64,23 @@ Your goal is to define a data contract so that consumers of your data know exact
 
 ## Create the Contract
 
-4. Go to [Data Contract Editor] and create a new data contract.
-   Use the **Form** editor to get started.
-   
+4. Create a new data contract and open it in the Data Contract Editor:
+
+   ```bash
+   datacontract edit orders_v1.odcs.yaml
+   ```
+
+   The file does not exist yet, so the CLI asks whether to create it — confirm.
+   The **edit** command starts the editor locally for that file — saving in the editor writes directly back to the file on disk.
+
+   Use the **Form** editor to get started and set:
+
    - **Name**: `Orders`
    - **ID**: `orders_v1`
-   - **Version**: `1.0.0`
+   - **Version**: `1.0.0` (leave as is)
    - **Status**: `draft` (leave as is)
    
-5. Go to **Servers** in the left navigation (or use the direct link [editor.datacontract.com/#/servers](https://editor.datacontract.com/#/servers)) and add a new server:
+5. Go to **Servers** in the left navigation and add a new server:
    
    - **Server**: `Orders`
    - **Type**: `postgres`
@@ -103,24 +111,16 @@ Your goal is to define a data contract so that consumers of your data know exact
      | `order_id`               | `string`     | `TEXT`        |
      | `sku`                    | `string`     | `TEXT`        |
 
-7. Save the contract locally as `orders_v1.odcs.yaml` by clicking the **Save** button on the top right.
-   Place it into the workshop repository folder (move it there if your browser saved it to Downloads).
+7. Click the **Save** button on the top right — the editor writes the changes directly back to `orders_v1.odcs.yaml` in the workshop repository folder.
    
-   > **Tip:** You might want to keep the tab open for later.
+   > **Tip:** You might want to keep the editor open for later.
 
 
 ## Test the Contract
 
 Testing checks your contract against the *real* database: it confirms the tables, columns, and types you described actually exist as specified — catching any drift between the contract and reality.
 
-8. Your Data Contract CLI should be installed by now.
-   This should work:
-
-   ```bash
-   datacontract --version
-   ```
-
-9. Create an `.env` file to provide the database credentials to the Data Contract CLI:
+8. Create an `.env` file to provide the database credentials to the Data Contract CLI:
    
    ```bash
    cp .env.example .env
@@ -128,7 +128,7 @@ Testing checks your contract against the *real* database: it confirms the tables
 
    The CLI picks up the `.env` file automatically (since version `1.0.1`) when run from this folder.
 
-10. Run the CLI on your data contract:
+9. Run the CLI on your data contract:
 
    ```bash
    datacontract test orders_v1.odcs.yaml
@@ -138,7 +138,7 @@ Testing checks your contract against the *real* database: it confirms the tables
    If not, fix what doesn't.
    If all checks fail, make sure that the database container is running.
 
-11. Verify tests can also fail:
+10. Verify tests can also fail:
     In your [orders_v1.odcs.yaml](../../orders_v1.odcs.yaml) change `physicalType` of `customer_email_address` to `integer`, then run the tests again.
     Try other mistakes and see how the output of the CLI changes.
     Revert afterward.
@@ -148,26 +148,17 @@ Testing checks your contract against the *real* database: it confirms the tables
 
 Make sure all tests pass before continuing. From here you can enrich the contract in two ways — **pick whichever suits you**:
 
-- **In the [Data Contract Editor]** — great for discovering the available fields and options. Reopen your contract (menu, top right) if you closed the tab, and **Save** to re-download the file after each change.
+- **In the Data Contract Editor** — great for discovering the available fields and options. Reopen it anytime with `datacontract edit orders_v1.odcs.yaml`; saving writes directly back to the file.
 - **Locally in your IDE** — faster once you know the fields. Edit `orders_v1.odcs.yaml` directly (see [Open Data Contract Standard] for reference), or let an AI agent help.
 
 > [!NOTE]
-> The editor and the file on disk don't sync automatically. If you switch sides, re-import the file into the editor (or re-download from it) first — otherwise you'll overwrite your changes.
-
-> [!TIP]
-> You can get the best of both worlds with the **edit** command:
->
-> ```bash
-> datacontract edit orders_v1.odcs.yaml
-> ```
->
-> It starts the Data Contract Editor locally for that file — saving in the editor writes directly back to the file on disk, so there's nothing to re-import or re-download.
+> If you change the file in your IDE while the editor is open, reload the editor page before saving there — otherwise the editor overwrites your IDE changes.
 
 The steps below name the editor's form fields, but each one is just a key in the YAML, so do whichever is faster for you.
 
 Let's add some more detail to the contract...
 
-12. Go to **Terms of Use** and add
+11. Go to **Terms of Use** and add
    
    - a **Description**,
    - a **Purpose**, and
@@ -175,22 +166,22 @@ Let's add some more detail to the contract...
   
    Feel free to use the ✨AI buttons to generate this.
 
-13. In the **Fundamentals**, add **Tags** like `orders`, or `ecommerce`.
+12. In the **Fundamentals**, add **Tags** like `orders`, or `ecommerce`.
 
-14. In your **Schemas** edit `orders.customer_email_address`:
+13. In your **Schemas** edit `orders.customer_email_address`:
     - add **Examples** based on the data, e.g., `test394@example.org`,
     - set **Classification & Security** → **Classification**: `confidential` (it's personally identifiable information!), and
     - set **Constraints** → **Required** to `true`
 
-15. Save the contract file and find the added metadata in it.
+14. Save the contract file and find the added metadata in it.
     
-16. Optionally, look at the HTML export of the contract and see how your changes reflect in it:
+15. Optionally, look at the HTML export of the contract and see how your changes reflect in it:
 
     ```bash
     datacontract export html orders_v1.odcs.yaml --output orders_v1.odcs.html && open orders_v1.odcs.html
     ```
 
-17. Run the test again.
+16. Run the test again.
 
     ```bash
     datacontract test orders_v1.odcs.yaml
@@ -201,7 +192,7 @@ Let's add some more detail to the contract...
 
 ## Define Relationships
 
-18. Add a `relationship` from `line_items.order_id` to `orders.order_id` to express the foreign key.
+17. Add a `relationship` from `line_items.order_id` to `orders.order_id` to express the foreign key.
     This tells consumers the two tables can be joined safely and documents the referential integrity between them.
 
     Add it on the `order_id` **property** inside the `line_items` schema (next to its `logicalType`/`physicalType`):
@@ -223,7 +214,7 @@ Let's add some more detail to the contract...
 
 ## Add Quality Checks
 
-19. Add a SQL quality check to ensure that `customer_email_address` contains an `@` sign (find invalid rows).
+18. Add a SQL quality check to ensure that `customer_email_address` contains an `@` sign (find invalid rows).
 
     Add it on the `customer_email_address` **property** inside the `orders` schema:
 
@@ -243,9 +234,9 @@ Let's add some more detail to the contract...
           # ...
     ```
     
-20. Test the contract again and spot the new check added by this.
+19. Test the contract again and spot the new check added by this.
 
-21. Add more constraints (if time allows), e.g.:
+20. Add more constraints (if time allows), e.g.:
     
     - Every `order_id` in `line_items` must exist in `orders`
     - `order_total` must be greater than or equal to 0
@@ -271,7 +262,7 @@ Let's add some more detail to the contract...
 
 ## Add Ownership
 
-22. Add a `team` and `support` channel, so consumers know how to contact the owners and get help.
+21. Add a `team` and `support` channel, so consumers know how to contact the owners and get help.
     These are **top-level** keys in the contract (not nested under a schema):
 
     ```yaml
@@ -291,7 +282,7 @@ Let's add some more detail to the contract...
 
 ## Add SLA Properties
 
-23. Define service-level agreements (SLAs), so consumers know how long data is retained and how fresh to expect it.
+22. Define service-level agreements (SLAs), so consumers know how long data is retained and how fresh to expect it.
     Like `team`, `slaProperties` is a **top-level** key:
 
     ```yaml
@@ -310,7 +301,7 @@ Let's add some more detail to the contract...
 
 ## Set to Active
 
-24. Your contract is complete — set `status` to `active`!
+23. Your contract is complete — set `status` to `active`!
 
 
 ## Bonus
@@ -334,5 +325,4 @@ Let's add some more detail to the contract...
   ```
 
 
-[Data Contract Editor]: <https://editor.datacontract.com>
 [Open Data Contract Standard]: <https://bitol-io.github.io/open-data-contract-standard/latest/>

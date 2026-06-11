@@ -48,7 +48,11 @@ The raw data is also available as JSON files in [`data/orders_v2/`](/data/orders
    cp orders_v1.odcs.yaml orders_v2.odcs.yaml
    ```
    
-2. Open it in the [Data Contract Editor]) (use the hamburger menu to load the file).
+2. Open it in the Data Contract Editor:
+
+   ```bash
+   datacontract edit orders_v2.odcs.yaml
+   ```
 
 3. Introduce the new major version by updating the **Fundamentals**:
     
@@ -85,6 +89,3 @@ The raw data is also available as JSON files in [`data/orders_v2/`](/data/orders
 
 
 8. As a shortcut for this workshop, jump straight to the end state: set [`orders_v1.odcs.yaml`](../../orders_v1.odcs.yaml) to `retired` and [`orders_v2.odcs.yaml`](../../orders_v2.odcs.yaml) to `active` in your contract files.
-
-
-[Data Contract Editor]: <https://editor.datacontract.com>
