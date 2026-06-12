@@ -9,5 +9,5 @@ uv tool update-shell
 datacontract --version
 entropy-data --version
 # If 'datacontract' or 'entropy-data' is not recognized, open a new terminal and try again.
-# pre-pull the workshop database image (needs Docker running)
-docker compose -f "$PSScriptRoot\..\docker-compose.yml" pull
+# pre-pull the workshop database image (needs Docker running; keep in sync with docker-compose.yml)
+docker pull postgres:17

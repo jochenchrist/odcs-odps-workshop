@@ -7,5 +7,5 @@ which datacontract
 datacontract --version
 which entropy-data
 entropy-data --version
-# pre-pull the workshop database image (needs Docker running)
-docker compose -f "$(dirname "$0")/../docker-compose.yml" pull
+# pre-pull the workshop database image (needs Docker running; keep in sync with docker-compose.yml)
+docker pull postgres:17
