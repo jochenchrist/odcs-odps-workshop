@@ -90,6 +90,15 @@ Your goal is to define a data contract so that consumers of your data know exact
    - **Port**: `5433`
    - **Database**: `workshop`
    - **Schema**: `orders_v1`
+
+   > **No local database?** As an alternative for Part A — for example when working in the hosted editor at [editor.datacontract.com](https://editor.datacontract.com), which cannot reach `localhost` — use the shared cloud copy of the workshop data instead (same tables and rows, hosted on Supabase):
+   >
+   > - **Host**: `aws-1-eu-central-2.pooler.supabase.com`
+   > - **Port**: `5432`
+   > - **Database**: `postgres`
+   > - **Schema**: `orders_v1` (exercise 2: `orders_v2`)
+   >
+   > Ask the trainer for the username and password, and set them as `DATACONTRACT_POSTGRES_USERNAME` / `DATACONTRACT_POSTGRES_PASSWORD` when running `datacontract test`.
   
 6. Go to Schemas and add two schemas with their properties:
 
