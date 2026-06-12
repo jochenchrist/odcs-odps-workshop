@@ -122,13 +122,7 @@ Your goal is to define a data contract so that consumers of your data know exact
 
 Testing checks your contract against the *real* database: it confirms the tables, columns, and types you described actually exist as specified — catching any drift between the contract and reality.
 
-8. Create an `.env` file to provide the database credentials to the Data Contract CLI:
-   
-   ```bash
-   cp .env.example .env
-   ```
-
-   The CLI picks up the `.env` file automatically (since version `1.0.1`) when run from this folder.
+8. The repository ships with an [`.env`](/.env) file that provides the database credentials — the CLI picks it up automatically (since version `1.0.1`) when run from this folder. Have a look at it; there is nothing to configure.
 
 9. Run the CLI on your data contract:
 

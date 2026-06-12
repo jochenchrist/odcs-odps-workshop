@@ -16,7 +16,7 @@ YAML files in a Git repository work well for a single team — but how do *other
    entropy-data --version
    ```
 
-4. Configure the connection: add your API key to the `.env` file in the repository root (created from `.env.example` in exercise 1; it is gitignored, and the Entropy Data CLI picks it up automatically):
+4. Configure the connection: add your API key to the `.env` file in the repository root (the Entropy Data CLI picks it up automatically; note that `.env` is tracked in git, so take care not to commit your API key):
 
    ```bash
    # .env
