@@ -15,7 +15,7 @@ Your goal is to define a data contract so that consumers of your data know exact
 
    This might take a few minutes.
 
-   > **Windows?** Run this (and all other commands in this workshop) in **Git Bash** — see the note in the [README](/README.md#prerequisites).
+   > **Windows?** Run `scripts\install.bat` instead — it works in both cmd and PowerShell (PowerShell-only alternative: `scripts\install.ps1`). All other commands in this workshop need **Git Bash** — see the note in the [README](/README.md#prerequisites).
 
 2. Start PostgreSQL with the preloaded data:
 

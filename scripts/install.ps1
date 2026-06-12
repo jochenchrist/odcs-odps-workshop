@@ -1,0 +1,11 @@
+# Installs the Data Contract CLI and the Entropy Data CLI (PowerShell variant of install.sh).
+# Keep the pinned versions in sync with install.sh.
+#
+# Run from the repository root:
+#   powershell -ExecutionPolicy Bypass -File scripts\install.ps1
+uv tool install --python python3.11 'datacontract-cli[all]==1.0.2'
+uv tool install 'entropy-data==0.3.12'
+uv tool update-shell
+datacontract --version
+entropy-data --version
+# If 'datacontract' or 'entropy-data' is not recognized, open a new terminal and try again.
