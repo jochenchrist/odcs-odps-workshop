@@ -7,3 +7,5 @@ uv tool update-shell
 datacontract --version
 entropy-data --version
 rem If 'datacontract' or 'entropy-data' is not recognized, open a new terminal and try again.
+rem pre-pull the workshop database image (needs Docker running)
+docker compose -f "%~dp0..\docker-compose.yml" pull
