@@ -15,6 +15,8 @@ Your goal is to define a data contract so that consumers of your data know exact
 
    This might take a few minutes.
 
+   > **Windows?** Run this (and all other commands in this workshop) in **Git Bash** — see the note in the [README](/README.md#prerequisites).
+
 2. Start PostgreSQL with the preloaded data:
 
    ```
@@ -178,8 +180,10 @@ Let's add some more detail to the contract...
 15. Optionally, look at the HTML export of the contract and see how your changes reflect in it:
 
     ```bash
-    datacontract export html orders_v1.odcs.yaml --output orders_v1.odcs.html && open orders_v1.odcs.html
+    datacontract export html orders_v1.odcs.yaml --output orders_v1.odcs.html
     ```
+
+    Then open `orders_v1.odcs.html` in your browser.
 
 16. Run the test again.
 
