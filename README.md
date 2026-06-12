@@ -10,6 +10,9 @@ Hands-on: put a PostgreSQL dataset under contract with [ODCS](https://bitol-io.g
 - [Docker](https://www.docker.com/) (with Docker Compose)
 - [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/install.sh)
 
+> [!IMPORTANT]
+> **Can't install anything on your laptop?** You can still participate: do the first two exercises directly in the hosted [Data Contract Editor](https://editor.datacontract.com) — it runs entirely in the browser, no installation needed. Use the shared cloud database (see the note in [Exercise 1](exercises/part-a/exercise1-put-your-data-under-contract.md)) instead of the local one.
+
 > [!NOTE]
 > **Windows:** Run all commands in **Git Bash** (included with [Git for Windows](https://gitforwindows.org/)) — the exercises use Unix shell features like heredocs (`cat <<EOF`) and pipes that don't work in PowerShell or cmd. Only the helper scripts in `scripts/` have native variants (`.bat`, works in cmd and PowerShell). If an interactive command like `docker compose exec postgres psql ...` fails with "the input device is not a TTY", prefix it with `winpty` or run Git Bash inside [Windows Terminal](https://aka.ms/terminal). WSL 2 works as well.
 

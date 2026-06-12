@@ -4,6 +4,9 @@ You are the owner of the **orders** data in your company's e-commerce platform.
 The data lives in a PostgreSQL database and consists of two tables: `orders` (containing order details like timestamps, totals, and customer information) and `line_items` (containing the individual items in each order, linked by `order_id`).
 Your goal is to define a data contract so that consumers of your data know exactly what to expect.
 
+> [!IMPORTANT]
+> **Cannot run the install script on your laptop?** Do this exercise and [Exercise 2](exercise2-data-contract-evolution.md) in the hosted [Data Contract Editor](https://editor.datacontract.com) instead — it runs entirely in the browser, no installation needed. Where the steps say `datacontract edit`, work in the hosted editor and use its **Save** button to download the file; as the server, use the shared cloud database from the note in step 5. For the `datacontract test` steps, team up with a neighbor who has the CLI running.
+
 
 ## Install the CLI & Start the Database
 
