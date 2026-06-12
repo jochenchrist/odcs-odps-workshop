@@ -11,7 +11,7 @@ Hands-on: put a PostgreSQL dataset under contract with [ODCS](https://bitol-io.g
 - [uv](https://docs.astral.sh/uv/) — used to install the [Data Contract CLI](https://cli.datacontract.com) and the [Entropy Data CLI](https://github.com/entropy-data/entropy-data-cli), see [`scripts/install.sh`](scripts/install.sh)
 
 > [!NOTE]
-> **Windows:** Run all commands in **Git Bash** (included with [Git for Windows](https://gitforwindows.org/)) — the exercises use Unix shell features like heredocs (`cat <<EOF`) and pipes that don't work in PowerShell or cmd. Only the install script has native variants: `scripts\install.bat` (works in cmd and PowerShell) and `scripts\install.ps1`. If an interactive command like `docker compose exec postgres psql ...` fails with "the input device is not a TTY", prefix it with `winpty` or run Git Bash inside [Windows Terminal](https://aka.ms/terminal). WSL 2 works as well.
+> **Windows:** Run all commands in **Git Bash** (included with [Git for Windows](https://gitforwindows.org/)) — the exercises use Unix shell features like heredocs (`cat <<EOF`) and pipes that don't work in PowerShell or cmd. Only the helper scripts in `scripts/` have native variants (`.bat`, works in cmd and PowerShell). If an interactive command like `docker compose exec postgres psql ...` fails with "the input device is not a TTY", prefix it with `winpty` or run Git Bash inside [Windows Terminal](https://aka.ms/terminal). WSL 2 works as well.
 
 > [!TIP]
 > Conference and hotel Wi-Fi can be painfully slow. Pull the Docker images in advance while you still have a good connection: `docker compose pull`
