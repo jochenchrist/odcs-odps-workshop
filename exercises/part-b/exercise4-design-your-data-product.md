@@ -46,7 +46,14 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
    - `total_quantity` is never less than `order_count`
    - The view is not empty
 
-5. Save the contract and run the tests:
+5. Add the owning `team` — the purchasing analytics team owns this contract, not the orders team (the platform in [Exercise 7](../part-c/exercise7-publish-to-entropy-data.md) refuses contracts without an owner):
+
+   ```yaml
+   team:
+     name: purchasing_analytics_team
+   ```
+
+6. Save the contract and run the tests:
 
    ```bash
    datacontract test sku_sales_per_year.odcs.yaml
@@ -58,23 +65,24 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
 
 ## Describe the Data Product
 
-6. Create `sku_sales_per_year.odps.yaml`, following the same structure as in [Exercise 3]:
+7. Create `sku_sales_per_year.odps.yaml`, following the same structure as in [Exercise 3]:
    
    - **ID**: `sku_sales`
    - **Name**: `SKU Sales`
    - **Status**: `draft`
-   - **Domain** `ecommerce`
+   - **Domain**: `ecommerce`
+   - **Team**: `purchasing_analytics_team` (same `team` as in the contract)
 
-7. Add an **output port** referencing your `sku_sales_per_year` contract — like in [Exercise 3] with `displayName` and the `server` as `customProperties`:
+8. Add an **output port** referencing your `sku_sales_per_year` contract, like in [Exercise 3]:
 
    ```yaml
    outputPorts:
      - name: sku_sales_per_year
        version: 1.0.0
        contractId: sku_sales_per_year
-      ```
+   ```
  
-8. Add an **input port** referencing the `orders_v2` contract — this declares which data (and which guarantees!) your product builds on:
+9. Add an **input port** referencing the `orders_v2` contract — this declares which data (and which guarantees!) your product builds on:
 
    ```yaml
    inputPorts:
@@ -83,9 +91,11 @@ You consume the `orders_v2` contract — it guarantees you the `quantity` column
        contractId: orders_v2
    ```
 
-9. Validate:
+10. Validate:
 
    ```bash
    dataproduct lint sku_sales_per_year.odps.yaml
    ```
 
+
+[Exercise 3]: <../part-a/exercise3-describe-your-data-product.md>

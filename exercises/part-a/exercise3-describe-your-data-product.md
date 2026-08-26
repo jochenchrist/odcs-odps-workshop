@@ -29,8 +29,7 @@ The product is the stable unit of ownership; its ports evolve.
    Replace the `purpose` and `limitations` comments with real text.
 
 2. Add an **output port** per data contract.
-   The `contractId` must match the `id` of the respective data contract.
-   Entropy Data reads a display name and the server connection from `customProperties`:
+   The `contractId` must match the `id` of the respective data contract:
 
    ```yaml
    outputPorts:
