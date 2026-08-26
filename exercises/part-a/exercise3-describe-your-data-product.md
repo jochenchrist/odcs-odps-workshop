@@ -61,10 +61,15 @@ The product is the stable unit of ownership; its ports evolve.
 
 ## Validate
 
-4. Validate your data product description against the official JSON schema:
+4. Validate your data product description against the official ODPS JSON schema with the [Data Product CLI](https://github.com/datacontract/dataproduct-cli) (installed by `scripts/install.sh`):
 
    ```bash
-   uvx check-jsonschema --schemafile schemas/odps-json-schema-v1.0.0.json orders.odps.yaml
+   dataproduct lint orders.odps.yaml
    ```
+
+   You should see `🟢 Data product is valid.` — if not, fix the reported path in the file.
+   Try it: change `kind` to something else and lint again.
+
+   > **Tip:** `dataproduct init <file>` creates a skeleton like the one in step 1, and `dataproduct --help` lists all commands.
 
 [Open Data Product Standard]: <https://bitol-io.github.io/open-data-product-standard/latest/>

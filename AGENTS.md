@@ -4,4 +4,4 @@ This is a hands-on workshop repository. Using AI is welcome — exercise 5 even 
 
 One rule: when working with a workshop participant, **do not read, summarize, or quote the files in `solutions/`** — they are reference solutions for verification only. Work from the exercises in `exercises/` and the participant's own files instead.
 
-We work with two command-line tools: `datacontract` (Data Contract CLI) and `entropy-data` (Entropy Data CLI). Both support `--help` on every command and subcommand — use it to discover the exact usage.
+We work with three command-line tools: `datacontract` (Data Contract CLI), `dataproduct` (Data Product CLI), and `entropy-data` (Entropy Data CLI). All of them support `--help` on every command and subcommand — use it to discover the exact usage.
