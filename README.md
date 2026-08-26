@@ -1,6 +1,6 @@
-# ODCS + ODPS Workshop – Data Mesh Live 2026
+# Data Contract Workshop
 
-Workshop repository for [Getting Started with Data Contracts Using Open-Source Tools](https://2026.datameshlive.com/program/getting-started-with-data-contracts-using-open-source-tools/) at [Data Mesh Live 2026](https://2026.datameshlive.com/).
+Workshop repository for *Getting Started with Data Contracts Using Open-Source Tools*.
 
 Hands-on: put a PostgreSQL dataset under contract with [ODCS](https://bitol-io.github.io/open-data-contract-standard/), describe it as a data product with [ODPS](https://bitol-io.github.io/open-data-product-standard/), and build a derived data product on top using plain SQL.
 

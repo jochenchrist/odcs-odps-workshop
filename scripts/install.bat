@@ -1,8 +1,8 @@
 @echo off
 rem Installs the Data Contract CLI and the Entropy Data CLI (Windows variant of install.sh).
 rem Works in cmd and PowerShell. Keep the pinned versions in sync with install.sh and install.ps1.
-uv tool install --force --python python3.11 "datacontract-cli[all]==1.0.2"
-uv tool install "entropy-data==0.3.13"
+uv tool install --force --python python3.11 "datacontract-cli[all]==1.1.1"
+uv tool install "entropy-data==0.3.21"
 uv tool update-shell
 datacontract --version
 entropy-data --version
